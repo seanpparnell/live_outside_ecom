@@ -1,20 +1,28 @@
 import React from "react";
-import { Navbar, Nav, Container } from "react-bootstrap";
+import { Navbar, Nav, Container, Image } from "react-bootstrap";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
+import { LinkContainer } from 'react-router-bootstrap'
+import Logo from '../assets/liveoutside.png'
 
 const Header = () => {
   return (
     <header>
-      <Navbar bg="dark" variant="dark" expand="md" collapseOnSelect>
+      <Navbar bg="light" variant="light" expand="md" collapseOnSelect>
         <Container>
-          <Navbar.Brand href="/">Live Outside</Navbar.Brand>
+          <LinkContainer to="/">
+            <Navbar.Brand>
+              <img style={{height: 50}} src={Logo} alt="logo"  />
+            </Navbar.Brand>
+          </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
-              <Nav.Link href="/cart">
-                <FaShoppingCart />
-                Cart
-              </Nav.Link>
+              <LinkContainer to="/cart">
+                <Nav.Link>
+                  <FaShoppingCart />
+                  Cart
+                </Nav.Link>
+              </LinkContainer>
               <Nav.Link href="/login">
                 <FaUser />
                 Sign In

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Outlet } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import Footer from './components/Footer';
 import Header from './components/Header';
@@ -9,7 +10,7 @@ const App = () => {
       <Header />
       <main className='py-3'>
         <Container>
-          <h1>Welcome to Live Outside</h1>
+          <Outlet />
         </Container>
       </main>
       <Footer />
