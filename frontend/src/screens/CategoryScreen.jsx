@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import Product from '../components/Product';
 
-const HomeScreen = () => {
+const CategoryScreen = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -31,4 +31,4 @@ const HomeScreen = () => {
   )
 }
 
-export default HomeScreen
+export default CategoryScreen

@@ -21,7 +21,8 @@
   },
   "homepage": "https://github.com/seanpparnell/live_outside_ecom#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "mongoose": "^8.0.0"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",

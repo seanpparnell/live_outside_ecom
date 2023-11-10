@@ -3,6 +3,7 @@ import { Navbar, Nav, Container, Image } from "react-bootstrap";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import { LinkContainer } from 'react-router-bootstrap'
 import Logo from '../assets/liveoutside.png'
+import CategoryBar from "./CategoryBar";
 
 const Header = () => {
   return (
@@ -31,6 +32,7 @@ const Header = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
+      <CategoryBar />
     </header>
   );
 };
