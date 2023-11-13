@@ -32,7 +32,7 @@ const Header = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <CategoryBar />
+      {/* <CategoryBar /> */}
     </header>
   );
 };

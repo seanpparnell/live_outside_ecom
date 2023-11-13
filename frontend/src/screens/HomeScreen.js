@@ -1,18 +1,26 @@
 import React from "react";
 import { useState } from "react";
+import CategoryScreen from './CategoryScreen';
+import CategoryBar from '../components/CategoryBar';
 import Carousel from "react-bootstrap/Carousel";
 import HomeImage from "../assets/main/home.jpg";
 import { Container, Image } from "react-bootstrap";
 
 const HomeScreen = () => {
   const [index, setIndex] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
-  // const handleSelect = (selectedIndex) => {
-  //   setIndex(selectedIndex);
-  // };
+  const handleCategorySelect = (categoryId) => {
+    setSelectedCategory(categoryId);
+  };
+
 
   return (
     <Container fluid>
+      <CategoryBar onSelectCategory={handleCategorySelect} />
+      {/* {selectedCategory ? (
+        null
+      ) : ( */}
       <Carousel ride={false} >
         <Carousel.Item>
           <Image style={style.carousel} src={HomeImage} alt="HomeLogo" />
@@ -38,6 +46,11 @@ const HomeScreen = () => {
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
+      {/* // )} */}
+      {/* <CategoryScreen /> */}
+
+      
+      <CategoryScreen selectedCategory={selectedCategory} />
     </Container>
   );
 };
