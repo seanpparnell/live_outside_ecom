@@ -12,7 +12,7 @@ const getProducts = asyncHandler(async (req, res) => {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
     }
-    return shuffledArray;
+    return shuffledArray.map((product, index) => ({...product.toObject(), position: index + 1}));
   };
 
   const products = await Product.find({});
@@ -30,10 +30,8 @@ const getProductsById = asyncHandler(async (req, res) => {
     res.json(product);
   } else {
     res.status(404);
-    throw new Error('Resouce not Found')
+    throw new Error('Resouce Not Found')
   }
-
-  res.status(404).json({message: 'Product not found'});
 });
 
 export { getProducts, getProductsById };

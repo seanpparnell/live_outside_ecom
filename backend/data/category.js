@@ -3,7 +3,6 @@ const categories = [
   { name: 'Camping / Hiking' },
   { name: 'Mens' },
   { name: 'Womens' },
-  // Add more categories as needed
 ];
 
 export default categories;

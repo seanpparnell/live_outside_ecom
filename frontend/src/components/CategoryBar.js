@@ -1,40 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Container } from 'react-bootstrap';
-import axios from 'axios';
+import { useGetCategoriesQuery } from "../slices/categoriesApiSlice";
 
 const CategoryBar = ({ onSelectCategory }) => {
-  const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const { data: categories, isLoading, error } = useGetCategoriesQuery();
+  
+  
+  
+  const [allProducts, setAllProducts] = useState(true);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const { data } = await axios.get('/api/categories');
-        setCategories(data);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      }
-    };
 
-    fetchCategories();
-  }, []); // Run this effect only once when the component mounts
-
+// Handles all Products from a given Category
   const handleCategoryClick = (category) => {
-    setSelectedCategory(category._id);
+    setAllProducts(false);
     onSelectCategory({category: category._id, name: category.name});
   };
 
+  // Set to null or another value that indicates all products
   const handleAllClick = () => {
-    setSelectedCategory(null); // Set to null or another value that indicates all products
     onSelectCategory(null);
   };
 
   return (
-    <Container fluid style={{ display: 'flex', width: '100%', height: '50px', justifyContent: 'center' }}>
-      <div style={{ backgroundColor: 'lightblue', width: '60%', display: 'flex', alignContent: 'center', justifyContent: 'space-between', alignItems: 'center' }}>
-        <button onClick={handleAllClick}>All</button>
-        {categories.map((category) => (
-          <button key={category._id} name={category.name} onClick={() => handleCategoryClick(category)}>
+    <Container fluid style={{ display: 'flex', width: '100%', height: '50px', backgroundColor: '#bbf4f7', justifyContent: 'center' }}>
+      <div style={{ width: '90%', display: 'flex', alignContent: 'center', justifyContent: 'space-between', alignItems: 'center' }}>
+        <button style={{width: '250px', border: '1px solid black', borderRadius: 20}} onClick={handleAllClick}>All</button>
+        {categories?.map((category) => (
+          <button style={{width: '250px', border: '1px solid black', borderRadius: 20}} key={category._id} name={category.name} onClick={() => handleCategoryClick(category)}>
             {category.name}
           </button>
         ))}
