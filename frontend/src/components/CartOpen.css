@@ -1,0 +1,43 @@
+@keyframes slideInFromRight {
+  0% {
+    right: -300px; /* Start off-screen to the right */
+  }
+  100% {
+    right: 0; /* Slide in to the right */
+  }
+}
+
+@keyframes slideOutToRight {
+  0% {
+    right: 0; /* Start at the fully open position */
+  }
+  100% {
+    right: -300px; /* Slide out to the right */
+  }
+}
+
+.cart-open-container {
+  width: 300px;
+  height: 70vh;
+  position: fixed;
+  top: 0;
+  right: 0; /* Set to 0 initially, so it doesn't pop in */
+  background-color: pink;
+  animation: slideInFromRight 1s ease;
+  z-index: 1000;
+}
+
+.x-close {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+  
+}
+
+.x-close h3 {
+  cursor: pointer;
+}
+
+.cart-open-container.close {
+  animation: slideOutToRight 1s ease !important; /* Animation when closing */
+}

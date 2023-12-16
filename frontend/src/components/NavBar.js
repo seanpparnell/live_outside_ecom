@@ -2,12 +2,24 @@ import React from "react";
 import { Navbar, Nav, Container, Image, Badge } from "react-bootstrap";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import { RiShoppingCartLine } from "react-icons/ri";
-import { useSelector } from "react-redux";
+import CartOpen from "./CartOpen";
+import { useSelector, useDispatch } from "react-redux";
+import { openCart, closeCart } from "../slices/cartSlice";
 import { LinkContainer } from "react-router-bootstrap";
 import LogoText from "../assets/main/logoText.png";
 
 const NavBar = () => {
+  const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
+  const isCartOpen = useSelector((state) => state.cart.isCartOpen);
+
+  const openCartHandler = () => {
+    console.log('opening cart....')
+    dispatch(openCart());
+  }
+
+  
+
 
   return (
     <header>
@@ -44,7 +56,7 @@ const NavBar = () => {
                   <FaUser />
                   Sign In
                 </Nav.Link>
-                <LinkContainer to="/cart" style={{display: 'flex'}}>
+                <Container style={{display: 'flex'}} onClick={openCartHandler}>
                   <Nav.Link>
                     <div style={{position: 'relative', marginRight: '10px'}}>
                       <RiShoppingCartLine
@@ -63,13 +75,13 @@ const NavBar = () => {
                             borderRadius: '100%'
                           }}
                         >
-                          {cartItems.length}
+                          {cartItems.reduce((a,c) => a + c.qty, 0)}
                         </span>
                       )}
                     </div>
                     Cart
                   </Nav.Link>
-                </LinkContainer>
+                </Container>
               </Nav>
             </Navbar.Collapse>
           </div>

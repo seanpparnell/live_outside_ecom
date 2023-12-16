@@ -40,13 +40,13 @@ const CategoryScreen = ({selectedCategory}) => {
   return (
     <>
       {(allProductsLoading || productsInCategoryLoading) && <Loader />}
-      {/* {(allProductsError || productsInCategoryError) && (
+      {(allProductsError || productsInCategoryError) && (
         <Message variant='danger'>
           {allProductsError?.data?.message ||
             productsInCategoryError?.data?.message ||
             "Error loading products"}
         </Message>
-      )} */}
+      )}
       {!allProductsLoading && !productsInCategoryLoading && (
         <>
           <Container>

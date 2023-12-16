@@ -36,7 +36,7 @@ const ProductScreen = () => {
 
   const addToCartHandler = (item) => {
     dispatch(addToCart({ ...product, qty }));
-    navigate("/cart");
+    // navigate("/cart");
   };
 
   const incrementQty = () => {
