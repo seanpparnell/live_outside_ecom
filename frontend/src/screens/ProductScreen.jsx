@@ -10,14 +10,17 @@ import {
   Card,
   Button,
   Form,
+  Container
 } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import Rating from "../components/Rating";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import QuantitySelector from "../components/QuantitySelector";
 import { useGetProductDetailsQuery } from "../slices/productsApiSlice";
 import { addToCart } from "../slices/cartSlice";
 import { useState } from "react";
+import './ProductScreen.css'
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
@@ -32,106 +35,88 @@ const ProductScreen = () => {
     isLoading,
     error,
   } = useGetProductDetailsQuery(productId);
-  // console.log([...Array(product.countInStock).keys()])
 
   const addToCartHandler = (item) => {
     dispatch(addToCart({ ...product, qty }));
     // navigate("/cart");
   };
 
-  const incrementQty = () => {
-    setQty((prevQty) => prevQty + 1);
-  };
-
-  const decrementQty = () => {
-    setQty((prevQty) => prevQty - 1);
-  };
-
   return (
     <>
-      <Link className="btn btn-light my-3" to="/">
-        Go Back
-      </Link>
-
-      {isLoading ? (
-        <Loader />
-      ) : error ? (
-        <Message variant="danger">
-          {error?.data?.message || error?.error}
-        </Message>
-      ) : (
-        <Row>
-          <Col mc={5}>
-            <Image src={product.image} alt={product.name} fluid />
-          </Col>
-          <Col md={4}>
-            <ListGroup variant="flush">
-              <ListGroup.Item>
-                <h3>{product.name}</h3>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <Rating
-                  value={product.rating}
-                  text={`${product.numReviews} reviews`}
-                />
-              </ListGroup.Item>
-              <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
-              <ListGroup.Item>
-                Description: {product.description}
-              </ListGroup.Item>
-            </ListGroup>
-          </Col>
-          <Col md={3}>
-            <Card>
+      <Container>
+        <Link className="btn btn-light my-3" to="/">
+          Go Back
+        </Link>
+        {isLoading ? (
+          <Loader />
+        ) : error ? (
+          <Message variant="danger">
+            {error?.data?.message || error?.error}
+          </Message>
+        ) : (
+          <Row>
+            <Col mc={5}>
+              <Image src={product.image} alt={product.name} fluid />
+            </Col>
+            <Col md={4}>
               <ListGroup variant="flush">
                 <ListGroup.Item>
-                  <Row>
-                    <Col>Price:</Col>
-                    <Col>
-                      <strong>${product.price}</strong>
-                    </Col>
-                  </Row>
+                  <h3>{product.name}</h3>
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <Row>
-                    <Col>Status:</Col>
-                    <Col>
-                      <strong>
-                        {product.countInStock > 0 ? "in stock" : "out of stock"}
-                      </strong>
-                    </Col>
-                  </Row>
+                  <Rating
+                    value={product.rating}
+                    text={`${product.numReviews} reviews`}
+                  />
                 </ListGroup.Item>
-                {product.countInStock > 0 && (
+                <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
+                <ListGroup.Item>
+                  Description: {product.description}
+                </ListGroup.Item>
+              </ListGroup>
+            </Col>
+            <Col md={3} style={{minWidth: '275px'}}>
+              <Card>
+                <ListGroup variant="flush">
                   <ListGroup.Item>
                     <Row>
-                      <Col>Qty</Col>
+                      <Col>Price:</Col>
                       <Col>
-                        <div className="quantity-selector">
-                          <button onClick={decrementQty}>-</button>
-                          <span>{qty}</span>
-                          <button onClick={incrementQty}>+</button>
-                        </div>
+                        <strong>${product.price}</strong>
                       </Col>
                     </Row>
                   </ListGroup.Item>
-                )}
-
-                <ListGroup.Item>
-                  <Button
-                    onClick={addToCartHandler}
-                    className="btn-block"
-                    type="button"
-                    disabled={product.countInStock === 0}
-                  >
-                    Add to Cart
-                  </Button>
-                </ListGroup.Item>
-              </ListGroup>
-            </Card>
-          </Col>
-        </Row>
-      )}
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Status:</Col>
+                      <Col>
+                        <strong>
+                          {product.countInStock > 0 ? "in stock" : "out of stock"}
+                        </strong>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                  {product.countInStock > 0 && (
+                    <ListGroup.Item>
+                      <QuantitySelector qty={qty} setQty={setQty} maxQty={product.countInStock} />
+                    </ListGroup.Item>
+                  )}
+                  <ListGroup.Item>
+                    <Button
+                      onClick={addToCartHandler}
+                      className="btn-block"
+                      type="button"
+                      disabled={product.countInStock === 0}
+                    >
+                      Add to Cart
+                    </Button>
+                  </ListGroup.Item>
+                </ListGroup>
+              </Card>
+            </Col>
+          </Row>
+        )}
+      </Container>
     </>
   );
 };

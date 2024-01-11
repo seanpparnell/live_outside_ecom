@@ -31,6 +31,17 @@ const cartSlice = createSlice({
       return updateCart(state);
     },
 
+    updateCartItemQuantity: (state, action) => {
+      const { itemId, newQty } = action.payload;
+      const itemToUpdate = state.cartItems.find((item) => item._id === itemId);
+
+      if (itemToUpdate) {
+        itemToUpdate.qty = newQty;
+      }
+
+      return updateCart(state);
+    },
+
     openCart: (state) => {
       state.isCartOpen = true;
     },
@@ -40,6 +51,6 @@ const cartSlice = createSlice({
   }
 });
 
-export const { addToCart, openCart, closeCart, removeFromCart } = cartSlice.actions;
+export const { addToCart, openCart, closeCart, removeFromCart, updateCartItemQuantity } = cartSlice.actions;
 
 export default cartSlice.reducer;

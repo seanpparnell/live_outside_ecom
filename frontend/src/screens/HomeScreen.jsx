@@ -25,39 +25,7 @@ const HomeScreen = () => {
           <Image style={{width: '100%', height: '50%', objectFit: 'cover' }} src={HomeWinterHero} alt="Winter Home"/>
         </div>
       </div>
-    <Container fluid>
-      {/* {selectedCategory ? (
-        null
-      ) : ( */}
-      {/* <Carousel ride={false} >
-        <Carousel.Item>
-          <Image style={style.carousel} src={HomeImage} alt="HomeLogo" />
-          <Carousel.Caption style={{backgroundColor: 'transparent'}}>
-            <h3>First slide label</h3>
-            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item>
-          <Image style={style.carousel} src={HomeImage} alt="HomeLogo" />
-          <Carousel.Caption style={{backgroundColor: 'transparent'}}>
-            <h3>Second slide label</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item>
-          <Image style={style.carousel} src={HomeImage} alt="HomeLogo" />
-          <Carousel.Caption style={{backgroundColor: 'transparent'}}>
-            <h3>Third slide label</h3>
-            <p>
-              Praesent commodo cursus magna, vel.
-            </p>
-          </Carousel.Caption>
-        </Carousel.Item>
-      </Carousel> */}
-      {/* // )} */}
-      {/* <CategoryScreen /> */}
-
-      
+    <Container>
       <Banner></Banner>
       <CategoryScreen selectedCategory={selectedCategory} />
     </Container>

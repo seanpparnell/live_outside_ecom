@@ -1,0 +1,30 @@
+.title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.cart-item {
+  width: 100%;
+  /* align-items: center; */
+  display: flex;
+  justify-content: center;
+  /* background-color: lightblue; */
+  background-color: pink;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.image-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
+}

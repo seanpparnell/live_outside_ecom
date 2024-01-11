@@ -43,16 +43,17 @@ const CartOpen = ({isOpen, onClose}) => {
             ) : (
               <ListGroup variant='flush'>
                 {cartItems.map((item) => (
-                  <ListGroup.Item key={item.product}>
-                    <Row>
-                      <Col md={2}>
-                        <Image src={item.image} alt={item.name} fluid rounded />
+                  <ListGroup.Item key={item._id}>
+                    <Row className='cart-item-row'>
+                      <Col sm={3} md={2}>
+                        <img style={{height: '50px', width: '50px', objectFit: 'contain'}} src={item.image} alt={item.name} fluid rounded />
                       </Col>
-                      <Col md={4}>
-                        <Link to={`/product/${item.product}`}>{item.name}</Link>
+                      <Col md={2}>
+                        <Link to={`/products/${item._id}`}>{item.name}</Link>
                       </Col>
                       <Col md={2}>${item.price}</Col>
-                      <Col md={2}>
+                      <Col md={2}>Qty: {item.qty}</Col>
+                      <Col md={3}>
                         <Button
                           type='button'
                           variant='light'
@@ -68,6 +69,21 @@ const CartOpen = ({isOpen, onClose}) => {
             )}
           </Col>
         </Row>
+        <Card>
+          <ListGroup style={{display: 'flex', justifyContent: 'center', alignContent: 'center'}}>
+            <ListGroup.Item style={{display: 'flex', justifyContent: 'space-between'}}>
+              <h6>
+                Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
+              </h6>
+              <h6>$ {cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}</h6>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Button type='button' className='btn-block' disabled={cartItems.length === 0}>
+                Proceed to Checkout
+              </Button>
+            </ListGroup.Item>
+          </ListGroup>
+        </Card>
       </Container>
     </div>
   )

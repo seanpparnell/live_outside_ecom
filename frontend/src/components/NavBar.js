@@ -2,24 +2,15 @@ import React from "react";
 import { Navbar, Nav, Container, Image, Badge } from "react-bootstrap";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import { RiShoppingCartLine } from "react-icons/ri";
-import CartOpen from "./CartOpen";
+
 import { useSelector, useDispatch } from "react-redux";
-import { openCart, closeCart } from "../slices/cartSlice";
+
 import { LinkContainer } from "react-router-bootstrap";
 import LogoText from "../assets/main/logoText.png";
 
 const NavBar = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
-  const isCartOpen = useSelector((state) => state.cart.isCartOpen);
-
-  const openCartHandler = () => {
-    console.log('opening cart....')
-    dispatch(openCart());
-  }
-
-  
-
 
   return (
     <header>
@@ -54,17 +45,16 @@ const NavBar = () => {
               <Nav className="ml-auto">
                 <Nav.Link href="/login">
                   <FaUser />
-                  Sign In
                 </Nav.Link>
-                <Container style={{display: 'flex'}} onClick={openCartHandler}>
-                  <Nav.Link>
-                    <div style={{position: 'relative', marginRight: '10px'}}>
+                <Container style={{ display: "flex" }}>
+                  <Nav.Link href='/cart'>
+                    <div style={{ position: "relative", marginRight: "10px" }}>
                       <RiShoppingCartLine
                         className="position-relative"
-                        style={{ fontSize: "1.5rem"}}
+                        style={{ fontSize: "1.5rem" }}
                       />
                       {cartItems.length > 0 && (
-                        <span 
+                        <span
                           className="badge badge-pill badge-primary"
                           style={{
                             color: "white",
@@ -72,14 +62,13 @@ const NavBar = () => {
                             position: "absolute",
                             top: "-8px",
                             right: "-8px",
-                            borderRadius: '100%'
+                            borderRadius: "100%",
                           }}
                         >
-                          {cartItems.reduce((a,c) => a + c.qty, 0)}
+                          {cartItems.reduce((a, c) => a + c.qty, 0)}
                         </span>
                       )}
                     </div>
-                    Cart
                   </Nav.Link>
                 </Container>
               </Nav>

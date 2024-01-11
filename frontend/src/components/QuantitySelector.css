@@ -1,0 +1,30 @@
+.qty-selector-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+.quantity-selector {
+  /* border: 1px solid black; */
+  padding: 0 auto;
+  width: fit-content
+}
+
+.form-label {
+  margin-right: 10px;
+}
+
+.qty {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.inc-dec-qty {
+  border-radius: 100%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-items: center;
+}

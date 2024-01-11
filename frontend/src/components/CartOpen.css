@@ -41,3 +41,8 @@
 .cart-open-container.close {
   animation: slideOutToRight 1s ease !important; /* Animation when closing */
 }
+
+.cart-item-row {
+  display: flex;
+  justify-content: space-between;
+}
