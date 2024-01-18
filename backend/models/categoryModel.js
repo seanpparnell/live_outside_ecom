@@ -6,6 +6,14 @@ const categorySchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  parentCategory: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Category",
+  },
+  subCategoryId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Category",
+  },
 }, {
   timestamps: true,
 });

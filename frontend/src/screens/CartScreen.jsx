@@ -29,6 +29,10 @@ const CartScreen = () => {
     dispatch(updateCartItemQuantity({ itemId, newQty }));
   };
 
+  const checkoutCartHandler = () => {
+    navigate('/login?redirect=/shipping')
+  }
+
   return (
     <div>
       <Container>
@@ -108,6 +112,7 @@ const CartScreen = () => {
                 type="button"
                 className="btn-block"
                 disabled={cartItems.length === 0}
+                onClick={checkoutCartHandler}
               >
                 Proceed to Checkout
               </Button>

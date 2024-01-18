@@ -1,13 +1,14 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
 import { useSelector } from "react-redux";
-import { Container } from "react-bootstrap";
+import { Container, Toast } from "react-bootstrap";
 import Footer from "./components/Footer";
 import Header from "./components/NavBar";
-import { useDispatch } from "react-redux";
+
 
 const App = () => {
-  const dispatch = useDispatch();
 
   return (
     <>
@@ -20,6 +21,7 @@ const App = () => {
         </main>
         <Footer />
       </Container>
+      <ToastContainer />
     </>
   );
 };

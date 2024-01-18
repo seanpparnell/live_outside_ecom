@@ -1,8 +1,40 @@
-const categories = [
-  { name: 'Cycling' },
-  { name: 'Camping / Hiking' },
-  { name: 'Mens' },
-  { name: 'Womens' },
+const parentCategories = [
+  { name: 'mensClothing'},
+  { name: 'womensClothing'},
+  { name: 'cycle' },
+  { name: 'campHike' },
+  { name: 'water' },
+  { name: 'mensFootwear'},
+  { name: 'womensFootwear'},
 ];
 
-export default categories;
+const subCategories = [
+  { name: 'jacketsMens', parentCategory: 'mensClothing' },
+  { name: 'shirtsMens', parentCategory: 'mensClothing' },
+  { name: 'pantsMens', parentCategory: 'mensClothing' },
+  { name: 'shortsMens', parentCategory: 'mensClothing' },
+  { name: 'jacketsWomens', parentCategory: 'womensClothing' },
+  { name: 'shirtsWomens', parentCategory: 'womensClothing' },
+  { name: 'pantsWomens', parentCategory: 'womensClothing' },
+  { name: 'shortsWomens', parentCategory: 'womensClothing' },
+  { name: 'roadBikes', parentCategory: 'cycle' },
+  { name: 'mountainBikes', parentCategory: 'cycle' },
+  { name: 'cycleApparel', parentCategory: 'cycle' },
+  { name: 'cycleAccessories', parentCategory: 'cycle' },
+  { name: 'tentsCampHike', parentCategory: 'campHike' },
+  { name: 'sleepingBagsCampHike', parentCategory: 'campHike' },
+  { name: 'campStovesCampHike', parentCategory: 'campHike' },
+  { name: 'backpacksCampHike', parentCategory: 'campHike' },
+  { name: 'hydrationPacksCampHike', parentCategory: 'campHike' },
+  { name: 'paddleBoardsWater', parentCategory: 'water' },
+  { name: 'paddleBoardPaddlesWater', parentCategory: 'water' },
+  { name: 'accessoriesWater', parentCategory: 'water' },
+  { name: 'athleticShoesMens', parentCategory: 'mensFootwear' },
+  { name: 'bootsMens', parentCategory: 'mensFootwear' },
+  { name: 'sandalsMens', parentCategory: 'mensFootwear' },
+  { name: 'athleticShoesWomens', parentCategory: 'womensFootwear' },
+  { name: 'bootsWomens', parentCategory: 'womensFootwear' },
+  { name: 'sandalsWomens', parentCategory: 'womensFootwear' },
+];
+
+export { parentCategories, subCategories };
