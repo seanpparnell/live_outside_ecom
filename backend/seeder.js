@@ -53,8 +53,6 @@ const importData = async () => {
       const subCategoryObj = subCategories.find(
         (sub) => sub.name === subCategory
       );
-      console.log(`subCategory: ${subCategory}`);
-      console.log(`subCategoryObj: ${JSON.stringify(subCategoryObj)}`);
 
       if (categoryId && subCategoryObj) {
         // Fetch the subCategoryId from MongoDB

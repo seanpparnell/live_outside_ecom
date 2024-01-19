@@ -25,6 +25,20 @@ const reviewSchema = mongoose.Schema(
   }
 );
 
+// const variationSchema = mongoose.Schema(
+//   {
+//     color: {
+//       type: String,
+//     },
+//     size: {
+//       type: String,
+//     },
+//     countInStock: {
+//       type: Number
+//     }
+//   }
+// )
+
 const productSchema = new mongoose.Schema(
   {
     user: {
@@ -36,10 +50,12 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    image: {
-      type: String,
-      required: true,
-    },
+    images: [
+      {
+        color: String,
+        path: String,
+      },
+    ],
     description: {
       type: String,
       required: true,
@@ -73,22 +89,24 @@ const productSchema = new mongoose.Schema(
       required: true,
       ref: "Category",
     },
-    countInStock: {
-      type: Number,
-      required: true,
-      default: 0,
-    },
-    color: {
+    defaultColor: {
       type: String,
       required: true,
     },
+
     variations: [
       {
-        attribute: String,
-        value: String,
+        color: String,
+        sizes: [
+          {
+            size: String,
+            countInStock: Number,
+          },
+        ],
       },
     ],
   },
+
   {
     timestamps: true,
   }

@@ -1,58 +1,64 @@
 
 const products = [
   {
-    name: 'North Face Classic Tee - Mens Blue',
-    image: '/images/clothing/mens/mens_tshirt_blue.JPEG',
+    name: 'North Face Classic Tee - Mens',
     description: 'This is a really awesome tshirt! Buy it!',
     brand: 'North Face',
     category: 'mensClothing',
     subCategory: 'shirtsMens',
     price: 29.99,
-    color: 'blue',
-    variations: [
-      { color: 'Black', size: 'Small', countInStock: 3 },
-      { color: 'Black', size: 'Medium', countInStock: 2 },
-      { color: 'Black', size: 'Large', countInStock: 4 },
-    ],
     rating: 4,
     numReviews: 12,
-  },
-  {
-    name: 'North Face Classic Tee - Mens Green',
-    image: '/images/clothing/mens/mens_tshirt_green.JPEG',
-    description: 'This is a really awesome tshirt! Buy it!',
-    brand: 'North Face',
-    category: 'mensClothing',
-    subCategory: 'shirtsMens',
-    price: 29.99,
-    color: 'green',
-    variations: [
-      { color: 'Black', size: 'Small', countInStock: 5 },
-      { color: 'Black', size: 'Medium', countInStock: 6 },
-      { color: 'Black', size: 'Large', countInStock: 3 },
+    defaultColor: 'green',
+    images: [
+      { color: 'green', path: '/images/clothing/mens/mens_tshirt_green.JPEG' },
+      { color: 'blue', path: '/images/clothing/mens/mens_tshirt_blue.JPEG' },
     ],
-    rating: 4,
-    numReviews: 12,
+    variations: [
+      {
+        color: 'green',
+        sizes: [
+          { size: 'small', countInStock: 1 },
+          { size: 'medium', countInStock: 2 },
+          { size: 'large', countInStock: 3 },
+        ],
+      },
+      {
+        color: 'blue',
+        sizes: [
+          { size: 'small', countInStock: 1 },
+          { size: 'medium', countInStock: 2 },
+          { size: 'large', countInStock: 3 },
+        ],
+      },
+    ],
   },
   {
     name: 'Specialized Road Bike',
-    image: '/images/bike.jpg',
-    description:
-      'Introducing the cutting-edge SwiftStrider Series, a specialized road bike designed for elite athletes and performance enthusiasts. With its lightweight carbon frame and precision-engineered components, the SwiftStrider Series offers unparalleled speed and agility, making it the ultimate choice for those who demand the very best in their cycling experience.',
+    description: 'Introducing the cutting-edge SwiftStrider Series, a specialized road bike designed for elite athletes and performance enthusiasts. With its lightweight carbon frame and precision-engineered components, the SwiftStrider Series offers unparalleled speed and agility, making it the ultimate choice for those who demand the very best in their cycling experience.',
     brand: 'Specialized',
     category: 'cycle',
     subCategory: 'roadBikes',
     price: 89.99,
-    countInStock: 10,
     rating: 4.5,
     numReviews: 12,
-    color: 'black',
+    defaultColor: 'none',
+    images: [
+    { color: 'none', path: '/images/bike.jpg' },
+    ],
+    variations: [
+      {
+        color: 'none', // Represents "No Color" for tents
+        sizes: [
+          { size: 'One Size Fits All', countInStock: 7 },
+        ],
+      },
+    ],
   },
   {
     name: 'Specialized Road Bike',
-    image: '/images/bike.jpg',
     description:
-      'Introducing the cutting-edge SwiftStrider Series, a specialized road bike designed for elite athletes and performance enthusiasts. With its lightweight carbon frame and precision-engineered components, the SwiftStrider Series offers unparalleled speed and agility, making it the ultimate choice for those who demand the very best in their cycling experience.',
+    'Introducing the cutting-edge SwiftStrider Series, a specialized road bike designed for elite athletes and performance enthusiasts. With its lightweight carbon frame and precision-engineered components, the SwiftStrider Series offers unparalleled speed and agility, making it the ultimate choice for those who demand the very best in their cycling experience.',
     brand: 'Specialized',
     category: 'cycle',
     subCategory: 'roadBikes',
@@ -60,13 +66,23 @@ const products = [
     countInStock: 7,
     rating: 4.0,
     numReviews: 8,
-    color: 'black',
+    defaultColor: 'none',
+    images: [
+      { color: 'none', path: '/images/bike.jpg' },
+      ],
+    variations: [
+      {
+        color: 'none', // Represents "No Color" for tents
+        sizes: [
+          { size: 'One Size Fits All', countInStock: 7 },
+        ],
+      },
+    ],
   },
   {
-    name: 'Sepcialize Road Bike',
-    image: '/images/bike.jpg',
+    name: 'Specialize Road Bike',
     description:
-      'Introducing the cutting-edge SwiftStrider Series, a specialized road bike designed for elite athletes and performance enthusiasts. With its lightweight carbon frame and precision-engineered components, the SwiftStrider Series offers unparalleled speed and agility, making it the ultimate choice for those who demand the very best in their cycling experience.',
+    'Introducing the cutting-edge SwiftStrider Series, a specialized road bike designed for elite athletes and performance enthusiasts. With its lightweight carbon frame and precision-engineered components, the SwiftStrider Series offers unparalleled speed and agility, making it the ultimate choice for those who demand the very best in their cycling experience.',
     brand: 'Specialized',
     category: 'cycle',
     subCategory: 'roadBikes',
@@ -74,13 +90,23 @@ const products = [
     countInStock: 5,
     rating: 3,
     numReviews: 12,
-    color: 'black',
+    defaultColor: 'none',
+    images: [
+      { color: 'none', path: '/images/bike.jpg' },
+      ],
+    variations: [
+      {
+        color: 'none', // Represents "No Color" for tents
+        sizes: [
+          { size: 'One Size Fits All', countInStock: 7 },
+        ],
+      },
+    ],
   },
   {
     name: '2 Person Dome Tent',
-    image: '/images/tent.jpg',
     description:
-      'The 2-person dome tent by Embark is a compact and easy-to-set-up shelter ideal for couples or solo adventurers. Featuring a classic dome design, it provides a snug and weather-resistant camping experience, making it a great choice for outdoor enthusiasts.',
+    'The 2-person dome tent by Embark is a compact and easy-to-set-up shelter ideal for couples or solo adventurers. Featuring a classic dome design, it provides a snug and weather-resistant camping experience, making it a great choice for outdoor enthusiasts.',
     brand: 'Embark',
     category: 'campHike',
     subCategory: 'tentsCampHike',
@@ -88,13 +114,23 @@ const products = [
     countInStock: 11,
     rating: 5,
     numReviews: 12,
-    color: 'black',
+    defaultColor: 'none',
+    images: [
+      { color: 'none', path: '/images/tent.jpg' },
+      ],
+    variations: [
+      {
+        color: 'none', // Represents "No Color" for tents
+        sizes: [
+          { size: 'One Size Fits All', countInStock: 7 },
+        ],
+      },
+    ],
   },
   {
     name: '2 Person Dome Tent',
-    image: '/images/tent.jpg',
     description:
-      'The 2-person dome tent by Embark is a compact and easy-to-set-up shelter ideal for couples or solo adventurers. Featuring a classic dome design, it provides a snug and weather-resistant camping experience, making it a great choice for outdoor enthusiasts.',
+    'The 2-person dome tent by Embark is a compact and easy-to-set-up shelter ideal for couples or solo adventurers. Featuring a classic dome design, it provides a snug and weather-resistant camping experience, making it a great choice for outdoor enthusiasts.',
     brand: 'Embark',
     category: 'campHike',
     subCategory: 'tentsCampHike',
@@ -102,21 +138,42 @@ const products = [
     countInStock: 7,
     rating: 3.5,
     numReviews: 10,
-    color: 'black',
+    defaultColor: 'none',
+    images: [
+      { color: 'none', path: '/images/tent.jpg' },
+      ],
+    variations: [
+      {
+        color: 'none', // Represents "No Color" for tents
+        sizes: [
+          { size: 'One Size Fits All', countInStock: 7 },
+        ],
+      },
+    ],
   },
   {
     name: '2 Person Dome Tent - Embark',
-    image: '/images/tent.jpg',
     description:
-      'The 2-person dome tent by Embark is a compact and easy-to-set-up shelter ideal for couples or solo adventurers. Featuring a classic dome design, it provides a snug and weather-resistant camping experience, making it a great choice for outdoor enthusiasts.',
-      brand: 'Embark',
-      category: 'campHike',
+    'The 2-person dome tent by Embark is a compact and easy-to-set-up shelter ideal for couples or solo adventurers. Featuring a classic dome design, it provides a snug and weather-resistant camping experience, making it a great choice for outdoor enthusiasts.',
+    brand: 'Embark',
+    category: 'campHike',
     subCategory: 'tentsCampHike',
-      price: 29.99,
-      countInStock: 0,
-      rating: 4,
-      numReviews: 12,
-      color: 'black',
+    price: 29.99,
+    countInStock: 0,
+    rating: 4,
+    numReviews: 12,
+    defaultColor: 'none',
+    images: [
+      { color: 'none', path: '/images/tent.jpg' },
+      ],
+    variations: [
+      {
+        color: 'none', // Represents "No Color" for tents
+        sizes: [
+          { size: 'One Size Fits All', countInStock: 7 },
+        ],
+      },
+    ],
   },
     
 ]

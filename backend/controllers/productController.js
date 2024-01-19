@@ -24,7 +24,7 @@ const getProducts = asyncHandler(async (req, res) => {
 // @route Get /api/products
 // @access Public
 const getProductsById = asyncHandler(async (req, res) => {
-  const product = await Product.findById(req.params.id);
+  const product = await Product.findById(req.params.id).populate("variations");
 
   if (product) {
     res.json(product);
