@@ -4,6 +4,8 @@ import { getCategories, getProductsInCategory, getProductsInSubCategory } from "
 
 
 router.route('/').get(getCategories);
+router.route('/categories/:id').get(getCategories);
+router.route('/subcategories/:id').get(getCategories);
 router.route('/:id/products').get(getProductsInCategory);
 router.route('/subcategories/:id/products').get(getProductsInSubCategory)
 

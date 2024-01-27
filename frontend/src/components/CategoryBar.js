@@ -1,36 +1,45 @@
-import React, { useState } from 'react';
-import { Container } from 'react-bootstrap';
+import React, { useState } from "react";
+import { Container, Dropdown } from "react-bootstrap";
 import { useGetCategoriesQuery } from "../slices/categoriesApiSlice";
+import { Link } from "react-router-dom";
 
 const CategoryBar = ({ onSelectCategory }) => {
   const { data: categories, isLoading, error } = useGetCategoriesQuery();
-  
-  
-  
-  const [allProducts, setAllProducts] = useState(true);
 
+  if (isLoading) {
+    return <p>loading categories</p>;
+  }
 
-// Handles all Products from a given Category
+  if (error) {
+    return <p>Error loadind categories:{error}</p>;
+  }
+
   const handleCategoryClick = (category) => {
-    setAllProducts(false);
-    onSelectCategory({category: category._id, name: category.name});
-  };
-
-  // Set to null or another value that indicates all products
-  const handleAllClick = () => {
-    onSelectCategory(null);
+    onSelectCategory(category.parentCategory._id);
+    console.log(category.parentCategory._id);
   };
 
   return (
-    <Container fluid style={{ display: 'flex', width: '100%', height: '50px', backgroundColor: '#bbf4f7', justifyContent: 'center' }}>
-      <div style={{ width: '90%', display: 'flex', alignContent: 'center', justifyContent: 'space-between', alignItems: 'center' }}>
-        <button style={{width: '250px', border: '1px solid black', borderRadius: 20}} onClick={handleAllClick}>All</button>
-        {categories?.map((category) => (
-          <button style={{width: '250px', border: '1px solid black', borderRadius: 20}} key={category._id} name={category.name} onClick={() => handleCategoryClick(category)}>
-            {category.name}
-          </button>
+    <Container>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          alignContent: "center",
+          justifyContent: "space-between",
+          alignItems: "center",
+          margin: "10px 0 10px 0",
+        }}
+      >
+        {categories.map((category) => (
+          <Link
+            key={category._id}
+            to={`/categories/${category.parentCategory.name}`} 
+            onClick={() => handleCategoryClick(category)}
+          >
+            {category.parentCategory.name}
+          </Link>
         ))}
-       
       </div>
     </Container>
   );

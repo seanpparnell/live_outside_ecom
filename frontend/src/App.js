@@ -12,7 +12,6 @@ const App = () => {
 
   return (
     <>
-      <Container>
         <Header />
         <main>
           <div>
@@ -20,7 +19,6 @@ const App = () => {
           </div>
         </main>
         <Footer />
-      </Container>
       <ToastContainer />
     </>
   );

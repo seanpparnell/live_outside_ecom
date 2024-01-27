@@ -4,7 +4,7 @@ const products = [
     name: 'North Face Classic Tee - Mens',
     description: 'This is a really awesome tshirt! Buy it!',
     brand: 'North Face',
-    category: 'mensClothing',
+    category: 'Men',
     subCategory: 'shirtsMens',
     price: 29.99,
     rating: 4,
@@ -37,7 +37,7 @@ const products = [
     name: 'Specialized Road Bike',
     description: 'Introducing the cutting-edge SwiftStrider Series, a specialized road bike designed for elite athletes and performance enthusiasts. With its lightweight carbon frame and precision-engineered components, the SwiftStrider Series offers unparalleled speed and agility, making it the ultimate choice for those who demand the very best in their cycling experience.',
     brand: 'Specialized',
-    category: 'cycle',
+    category: 'Cycle',
     subCategory: 'roadBikes',
     price: 89.99,
     rating: 4.5,
@@ -60,7 +60,7 @@ const products = [
     description:
     'Introducing the cutting-edge SwiftStrider Series, a specialized road bike designed for elite athletes and performance enthusiasts. With its lightweight carbon frame and precision-engineered components, the SwiftStrider Series offers unparalleled speed and agility, making it the ultimate choice for those who demand the very best in their cycling experience.',
     brand: 'Specialized',
-    category: 'cycle',
+    category: 'Cycle',
     subCategory: 'roadBikes',
     price: 599.99,
     countInStock: 7,
@@ -84,7 +84,7 @@ const products = [
     description:
     'Introducing the cutting-edge SwiftStrider Series, a specialized road bike designed for elite athletes and performance enthusiasts. With its lightweight carbon frame and precision-engineered components, the SwiftStrider Series offers unparalleled speed and agility, making it the ultimate choice for those who demand the very best in their cycling experience.',
     brand: 'Specialized',
-    category: 'cycle',
+    category: 'Cycle',
     subCategory: 'roadBikes',
     price: 929.99,
     countInStock: 5,
@@ -108,7 +108,7 @@ const products = [
     description:
     'The 2-person dome tent by Embark is a compact and easy-to-set-up shelter ideal for couples or solo adventurers. Featuring a classic dome design, it provides a snug and weather-resistant camping experience, making it a great choice for outdoor enthusiasts.',
     brand: 'Embark',
-    category: 'campHike',
+    category: 'Camp & Hike',
     subCategory: 'tentsCampHike',
     price: 399.99,
     countInStock: 11,
@@ -132,7 +132,7 @@ const products = [
     description:
     'The 2-person dome tent by Embark is a compact and easy-to-set-up shelter ideal for couples or solo adventurers. Featuring a classic dome design, it provides a snug and weather-resistant camping experience, making it a great choice for outdoor enthusiasts.',
     brand: 'Embark',
-    category: 'campHike',
+    category: 'Camp & Hike',
     subCategory: 'tentsCampHike',
     price: 49.99,
     countInStock: 7,
@@ -156,7 +156,7 @@ const products = [
     description:
     'The 2-person dome tent by Embark is a compact and easy-to-set-up shelter ideal for couples or solo adventurers. Featuring a classic dome design, it provides a snug and weather-resistant camping experience, making it a great choice for outdoor enthusiasts.',
     brand: 'Embark',
-    category: 'campHike',
+    category: 'Camp & Hike',
     subCategory: 'tentsCampHike',
     price: 29.99,
     countInStock: 0,

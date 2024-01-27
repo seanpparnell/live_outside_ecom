@@ -22,8 +22,6 @@ const getAllProductsByCategory = async (category) => {
     })
   );
 
-  // Include variations of subcategories if needed
-
   return allProducts;
 };
 
@@ -42,13 +40,10 @@ const getAllProductsBySubCategory = async (subcategory) => {
         variations: variations.map((variation) => ({
           name: variation.attribute,
           value: variation.value,
-        })), 
+        })),
       };
     })
   );
-
-  // Include variations of subsubcategories if needed
-
   return allProducts;
 };
 
