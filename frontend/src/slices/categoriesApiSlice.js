@@ -11,9 +11,8 @@ export const CategoriesApiSlice = apiSlice.injectEndpoints({
     }),
     getProductsInCategory: builder.query({
       query: (categoryId) => {
-        console.log('categoryId:::::', categoryId);
         return {
-          url: PRODUCTS_IN_CATEGORY.replace(":id", categoryId.category),
+          url: PRODUCTS_IN_CATEGORY.replace(":id", categoryId),
         };
       },
       keepUnusedDataFor: 5,

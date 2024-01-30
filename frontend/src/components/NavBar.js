@@ -1,23 +1,15 @@
-import React, {useState} from "react";
+import React from "react";
 import { Navbar, Nav, Container, Image, Badge } from "react-bootstrap";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import { RiShoppingCartLine } from "react-icons/ri";
-
-import { useSelector, useDispatch } from "react-redux";
-
+import { useSelector} from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import LogoText from "../assets/main/logoText.png";
 import CategoryBar from "./CategoryBar";
 
 const NavBar = () => {
-  const dispatch = useDispatch();
+
   const cartItems = useSelector((state) => state.cart.cartItems);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-
-
-  const handleCategorySelect = (category) => {
-    setSelectedCategory(category);
-  };
 
   return (
     <header>
@@ -83,7 +75,7 @@ const NavBar = () => {
           </div>
         </Container>
       </Navbar>
-      <CategoryBar onSelectCategory={handleCategorySelect}/>
+      <CategoryBar />
     </header>
   );
 };

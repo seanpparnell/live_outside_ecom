@@ -5,17 +5,18 @@ import 'react-toastify/dist/ReactToastify.css'
 import { useSelector } from "react-redux";
 import { Container, Toast } from "react-bootstrap";
 import Footer from "./components/Footer";
-import Header from "./components/NavBar";
+import NavBar from "./components/NavBar";
+
 
 
 const App = () => {
 
   return (
     <>
-        <Header />
+        <NavBar />
         <main>
           <div>
-            <Outlet />
+            <Outlet/>
           </div>
         </main>
         <Footer />

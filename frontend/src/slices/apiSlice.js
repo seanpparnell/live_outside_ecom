@@ -9,4 +9,4 @@ export const apiSlice = createApi({
   endpoints: (builder) => ({}),
 });
 
-export const {useGetCategoriesQuery, useGetProductsQuery } = apiSlice;
+export const {useGetCategoriesQuery, useGetProductsQuery, useGetProductsInCategoryQuery } = apiSlice;

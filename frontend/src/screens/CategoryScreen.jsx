@@ -9,14 +9,18 @@ import ProductList from "../components/ProductList";
 import SubCategoryBar from "../components/SubCategoryBar";
 import { useGetProductsQuery } from "../slices/productsApiSlice";
 import { useGetProductsInCategoryQuery } from "../slices/categoriesApiSlice";
+import SideBarFilter from "../components/SideBarFilter";
+import { useSelector } from "react-redux";
 
-const CategoryScreen = ({selectedCategory}) => {
-  const { categoryName } = useParams();
+const CategoryScreen = () => {
+  const selectedCategory = useSelector((state) => state.category.categoryId)
+ 
   return (
     <>
-      <Container>
-        <SubCategoryBar selectedCategory={selectedCategory} />
-        <ProductList selectedCategory={selectedCategory}/>
+      <SubCategoryBar />
+      <Container style={{display: 'flex'}}>
+        <SideBarFilter />
+        <ProductList categoryId={selectedCategory}/>
       </Container>
     </>
   );

@@ -1,23 +1,28 @@
-import React, { useState } from "react";
-import { Container, Dropdown } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Container } from "react-bootstrap";
 import { useGetCategoriesQuery } from "../slices/categoriesApiSlice";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addCategoryId } from "../slices/categorySlice";
 
-const CategoryBar = ({ onSelectCategory }) => {
+const CategoryBar = () => {
   const { data: categories, isLoading, error } = useGetCategoriesQuery();
 
+  const dispatch = useDispatch();
+  
+
+  const handleCategoryClick = (category) => {
+    dispatch(addCategoryId(category.parentCategory._id));
+  };
+
+
   if (isLoading) {
-    return <p>loading categories</p>;
+    return <p>Loading categories</p>;
   }
 
   if (error) {
-    return <p>Error loadind categories:{error}</p>;
+    return <p>Error loading categories: {error}</p>;
   }
-
-  const handleCategoryClick = (category) => {
-    onSelectCategory(category.parentCategory._id);
-    console.log(category.parentCategory._id);
-  };
 
   return (
     <Container>
@@ -34,7 +39,7 @@ const CategoryBar = ({ onSelectCategory }) => {
         {categories.map((category) => (
           <Link
             key={category._id}
-            to={`/categories/${category.parentCategory.name}`} 
+            to={`/categories/${category.parentCategory.name}`}
             onClick={() => handleCategoryClick(category)}
           >
             {category.parentCategory.name}

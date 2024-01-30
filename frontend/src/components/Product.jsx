@@ -1,12 +1,21 @@
-import React, { useEffect, useRef } from 'react'
-import PropTypes from 'prop-types';
-import { Card } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
-import Rating from './Rating'
-import './Product.css'
+// Product.js
 
-const Product = ({product, index}) => {
+import React, { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
+import { Card } from 'react-bootstrap';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import Rating from './Rating';
+import './Product.css';
+
+const Product = ({ product, index, onClick }) => {
+  const navigate = useNavigate();
+  const { id, color } = useParams();
+  
+  const selectedColorImage = product.images.find((image) => image.color === color);
+  const productImgPath = selectedColorImage ? selectedColorImage.path : product.images[0].path;
   const productRef = useRef();
+
+  
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -34,11 +43,10 @@ const Product = ({product, index}) => {
     };
   }, [index]);
 
-
   return (
-    <Card ref={productRef} className='my-3 p-3 rounded product'>
+    <Card ref={productRef} className='my-3 p-3 rounded product' onClick={onClick}>
       <Link to={`/products/${product._id}`}>
-        <Card.Img src={product.image} variant='top' />
+        <Card.Img src={productImgPath} alt={product.name} variant='top' />
       </Link>
       <Card.Body>
         <Link to={`/products/${product._id}`}>
@@ -49,12 +57,10 @@ const Product = ({product, index}) => {
         <Card.Text as="div">
           <Rating value={product.rating} text={`${product.numReviews} reviews`} />
         </Card.Text>
-        <Card.Text as="h3">
-          ${product.price}
-        </Card.Text>
+        <Card.Text as="h3">${product.price}</Card.Text>
       </Card.Body>
     </Card>
-  )
+  );
 };
 
 Product.propTypes = {
@@ -62,4 +68,4 @@ Product.propTypes = {
   index: PropTypes.number.isRequired,
 };
 
-export default Product
+export default Product;

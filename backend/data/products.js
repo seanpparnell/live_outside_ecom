@@ -11,8 +11,41 @@ const products = [
     numReviews: 12,
     defaultColor: 'green',
     images: [
-      { color: 'green', path: '/images/clothing/mens/mens_tshirt_green.JPEG' },
-      { color: 'blue', path: '/images/clothing/mens/mens_tshirt_blue.JPEG' },
+      { color: 'green', path: '/images/clothing/mens/mens_tshirt_green.jpg' },
+      { color: 'blue', path: '/images/clothing/mens/mens_tshirt_blue.jpg' },
+    ],
+    variations: [
+      {
+        color: 'green',
+        sizes: [
+          { size: 'small', countInStock: 1 },
+          { size: 'medium', countInStock: 2 },
+          { size: 'large', countInStock: 3 },
+        ],
+      },
+      {
+        color: 'blue',
+        sizes: [
+          { size: 'small', countInStock: 1 },
+          { size: 'medium', countInStock: 2 },
+          { size: 'large', countInStock: 3 },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'North Face Classic Tee - Mens',
+    description: 'This is a really awesome tshirt! Buy it!',
+    brand: 'North Face',
+    category: 'Men',
+    subCategory: 'shirtsMens',
+    price: 29.99,
+    rating: 4,
+    numReviews: 12,
+    defaultColor: 'green',
+    images: [
+      { color: 'green', path: '/images/clothing/mens/mens_tshirt_green.jpg' },
+      { color: 'blue', path: '/images/clothing/mens/mens_tshirt_blue.jpg' },
     ],
     variations: [
       {
