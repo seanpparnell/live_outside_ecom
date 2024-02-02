@@ -1,71 +1,85 @@
 // Product.js
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { Card } from "react-bootstrap";
+import Rating from "./Rating";
+import ColorFilter from "./ColorFilter";
+import {
+  setSelectedColor,
+  setSelectedImagePath,
+  selectSelectedImagePath,
+  selectAvailableColors,
+} from "../slices/colorSlice";
 
-import React, { useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
-import { Card } from 'react-bootstrap';
-import { Link, useParams, useNavigate } from 'react-router-dom';
-import Rating from './Rating';
-import './Product.css';
+const Product = ({ product, index, triggerRender }) => {
+  const { _id, name, rating, numReviews, price, images, availableColors } =
+    product;
+  const availableColorsRedux = useSelector(selectAvailableColors);
+  const [selectedColorLocal, setSelectedColorLocal] = useState("");
+  const dispatch = useDispatch();
 
-const Product = ({ product, index, onClick }) => {
-  const navigate = useNavigate();
-  const { id, color } = useParams();
-  
-  const selectedColorImage = product.images.find((image) => image.color === color);
-  const productImgPath = selectedColorImage ? selectedColorImage.path : product.images[0].path;
-  const productRef = useRef();
+  // Update local state and dispatch to Redux
+  const handleColorChange = (color) => {
+    setSelectedColorLocal(color);
+    dispatch(setSelectedColor({ color, index })); // Pass the index to identify the specific variant product
+  };
 
-  
+  const getImagePath = (color) => {
+    const selectedColor = availableColorsRedux.find(
+      (colorObj) => colorObj.color === color
+    );
+    return selectedColor ? selectedColor.path : "";
+  };
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            productRef.current.classList.add('fade-in');
-          }
-        });
-      },
-      { threshold: 1 } // Adjust the threshold as needed
-    );
-
-    // Delay the observation based on the index
-    const delay = index * 500; // Adjust the delay as needed
-
-    const timeoutId = setTimeout(() => {
-      observer.observe(productRef.current);
-    }, delay);
-
-    // Clean up timeout and observer when the component unmounts
-    return () => {
-      clearTimeout(timeoutId);
-      observer.disconnect();
-    };
-  }, [index]);
+    // If no color is selected and there is a defaultColor, use the defaultColor
+    if (!selectedColorLocal && product.defaultColor) {
+      setSelectedColorLocal(product.defaultColor);
+    }
+  }, [selectedColorLocal, product.defaultColor, triggerRender]);
 
   return (
-    <Card ref={productRef} className='my-3 p-3 rounded product' onClick={onClick}>
-      <Link to={`/products/${product._id}`}>
-        <Card.Img src={productImgPath} alt={product.name} variant='top' />
+    <Card className="my-3 p-3 rounded product">
+      {/* Color filter for the product */}
+      <ColorFilter
+        availableColors={availableColorsRedux}
+        selectedColor={selectedColorLocal}
+        onColorClick={handleColorChange}
+      />
+
+      <Link to={`/products/${_id}`}>
+        {/* Use the path from availableColors directly */}
+        <Card.Img
+          src={getImagePath(selectedColorLocal)}
+          alt={name}
+          variant="top"
+        />
       </Link>
       <Card.Body>
-        <Link to={`/products/${product._id}`}>
-          <Card.Title className='product-title' as="div">
-            <strong>{product.name}</strong>
+        <Link to={`/products/${_id}`}>
+          <Card.Title className="product-title" as="div">
+            <strong>{name}</strong>
           </Card.Title>
         </Link>
         <Card.Text as="div">
-          <Rating value={product.rating} text={`${product.numReviews} reviews`} />
+          <Rating value={rating} text={`${numReviews} reviews`} />
         </Card.Text>
-        <Card.Text as="h3">${product.price}</Card.Text>
+        <Card.Text as="h3">${price}</Card.Text>
       </Card.Body>
     </Card>
   );
 };
 
-Product.propTypes = {
-  product: PropTypes.object.isRequired,
-  index: PropTypes.number.isRequired,
+
+
+// Helper function to get the image path based on the selected color
+const getImagePath = (selectedColor, availableColors) => {
+  const selectedColorObj = availableColors.find(
+    (colorObj) => colorObj.color === selectedColor
+  );
+  return selectedColorObj ? selectedColorObj.path : "";
 };
 
 export default Product;

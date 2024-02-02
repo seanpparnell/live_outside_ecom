@@ -13,8 +13,8 @@ const getAllProductsByCategory = async (category) => {
       return {
         ...rest,
         variations: variations.map((variation) => ({
-          name: variation.attribute,
-          value: variation.value,
+          name: variation.color,
+          value: variation.sizes,
         })),
       };
     });
