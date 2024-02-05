@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";  // Import 'useSelector'
+import { useDispatch, useSelector } from "react-redux"; // Import 'useSelector'
 import Product from "./Product";
 import Loader from "./Loader";
 import Message from "./Message";
 import { useGetProductsInCategoryQuery } from "../slices/categoriesApiSlice";
-import { setAvailableColors, selectAvailableColors } from "../slices/colorSlice";
+import {
+  setAvailableColors,
+  selectAvailableColors,
+} from "../slices/filtersSlice";
 
 const ProductList = ({ categoryId }) => {
   const dispatch = useDispatch();
@@ -24,9 +27,15 @@ const ProductList = ({ categoryId }) => {
         if (result.data && result.data.length > 0) {
           const colors = result.data
             .flatMap((product) =>
-              product.images.map((image) => ({ color: image.color, path: image.path }))
+              product.images.map((image) => ({
+                color: image.color,
+                path: image.path,
+              }))
             )
-            .filter((color, index, self) => self.findIndex((c) => c.color === color.color) === index);
+            .filter(
+              (color, index, self) =>
+                self.findIndex((c) => c.color === color.color) === index
+            );
 
           dispatch(setAvailableColors(colors));
         }
@@ -47,7 +56,7 @@ const ProductList = ({ categoryId }) => {
   useEffect(() => {
     // Trigger re-render when availableColors are updated
     setTriggerRender((prev) => !prev);
-  }, [availableColorsRedux]);  // Use 'availableColorsRedux' instead of 'selectAvailableColors'
+  }, [availableColorsRedux]); // Use 'availableColorsRedux' instead of 'selectAvailableColors'
 
   return (
     <Container>
@@ -60,7 +69,13 @@ const ProductList = ({ categoryId }) => {
             // If the product has color variations, render a card for each variation
             if (product.images && product.images.length > 1) {
               return product.images.map((image, index) => (
-                <Col key={`${product._id}-${index}`} xs={12} sm={6} md={4} lg={3}>
+                <Col
+                  key={`${product._id}-${index}`}
+                  xs={12}
+                  sm={6}
+                  md={4}
+                  lg={3}
+                >
                   <Product
                     key={`${product._id}-${index}`}
                     product={createVariantProduct(product, image)}

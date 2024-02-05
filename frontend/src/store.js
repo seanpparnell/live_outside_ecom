@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { apiSlice } from "./slices/apiSlice";
-import cartSliceReducer from './slices/cartSlice';
-import authSliceReducer from './slices/authSlice';
-import categorySliceReducer from './slices/categorySlice';
-import colorSliceReducer from './slices/colorSlice'
+import cartSliceReducer from "./slices/cartSlice";
+import authSliceReducer from "./slices/authSlice";
+import categorySliceReducer from "./slices/categorySlice";
+import filtersSliceReducer from "./slices/filtersSlice";
 
 const store = configureStore({
   reducer: {
@@ -11,12 +11,11 @@ const store = configureStore({
     cart: cartSliceReducer,
     auth: authSliceReducer,
     category: categorySliceReducer,
-    color: colorSliceReducer,
+    filter: filtersSliceReducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(apiSlice.middleware),
   devTools: true,
-})
-
-
+});
 
 export default store;

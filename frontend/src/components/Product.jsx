@@ -11,7 +11,7 @@ import {
   setSelectedImagePath,
   selectSelectedImagePath,
   selectAvailableColors,
-} from "../slices/colorSlice";
+} from "../slices/filtersSlice";
 
 const Product = ({ product, index, triggerRender }) => {
   const { _id, name, rating, numReviews, price, images, availableColors } =
@@ -71,8 +71,6 @@ const Product = ({ product, index, triggerRender }) => {
     </Card>
   );
 };
-
-
 
 // Helper function to get the image path based on the selected color
 const getImagePath = (selectedColor, availableColors) => {
