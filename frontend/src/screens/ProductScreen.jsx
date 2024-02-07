@@ -1,35 +1,55 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { Row, Col, Image, ListGroup, Card, Button, Container } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
-import Rating from '../components/Rating';
-import Loader from '../components/Loader';
-import Message from '../components/Message';
-import QuantitySelector from '../components/QuantitySelector';
-import { useGetProductDetailsQuery } from '../slices/productsApiSlice';
-import { addToCart } from '../slices/cartSlice';
-import './ProductScreen.css';
+import React, { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+import {
+  Row,
+  Col,
+  Image,
+  ListGroup,
+  Card,
+  Button,
+  Container,
+} from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import Rating from "../components/Rating";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
+import ColorFilter from "../components/ColorFilter";
+import SizeFilter from "../components/SizeFilter";
+import QuantitySelector from "../components/QuantitySelector";
+import { useGetProductDetailsQuery } from "../slices/productsApiSlice";
+import { addToCart } from "../slices/cartSlice";
+import "./ProductScreen.css";
+import {
+  selectSelectedColorImgPath,
+  setSelectedColor,
+  setSelectedColorImgPath,
+  selectSelectedColor
+} from "../slices/filtersSlice";
 
 const ProductScreen = () => {
-  const { id: productId } = useParams();
-  const [selectedColor, setSelectedColor] = useState('');
+  const { id: productId, color: colorName } = useParams();
   const [qty, setQty] = useState(1);
+  const [selectedColorLocal, setSelectedColorLocal] = useState(""); // Local state to manage selected color
   const dispatch = useDispatch();
+  const highlightColor = useSelector(selectSelectedColor)
 
-  const { data: product, isLoading, error } = useGetProductDetailsQuery(productId);
-
-  useEffect(() => {
-    if (selectedColor && product && product.images) {
-      const selectedColorImage = product.images.find((image) => image.color === selectedColor);
-      if (selectedColorImage) {
-        product.images[0].path = selectedColorImage.path;
-        console.log(`selected color image path : ${selectedColorImage}`)
-      }
-    }
-  }, [selectedColor, product]);
+  const {
+    data: product,
+    isLoading,
+    error,
+  } = useGetProductDetailsQuery(productId);
 
   const addToCartHandler = () => {
     dispatch(addToCart({ ...product, qty }));
+  };
+
+  const colorImgPath = useSelector(selectSelectedColorImgPath);
+
+  // Function to handle color change event
+  const handleColorChange = (color) => {
+    setSelectedColorLocal(color);
+    dispatch(setSelectedColor(color)); // Dispatch action to update selected color in Redux store
+    dispatch(setSelectedColorImgPath(color)); // Dispatch action to update selected color image path in Redux store
   };
 
   return (
@@ -40,11 +60,17 @@ const ProductScreen = () => {
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message variant="danger">{error?.data?.message || error?.error}</Message>
+        <Message variant="danger">
+          {error?.data?.message || error?.error}
+        </Message>
       ) : (
         <Row>
           <Col md={5}>
-            <Image src={product.images[0].path} alt={product.name} fluid />
+            <Image src={colorImgPath} alt={product.name} fluid />
+            <ColorFilter
+              selectedColor={highlightColor}
+              onColorClick={handleColorChange}
+            />
           </Col>
           <Col md={4}>
             <ListGroup variant="flush">
@@ -52,7 +78,10 @@ const ProductScreen = () => {
                 <h3>{product.name}</h3>
               </ListGroup.Item>
               <ListGroup.Item>
-                <Rating value={product.rating} text={`${product.numReviews} reviews`} />
+                <Rating
+                  value={product.rating}
+                  text={`${product.numReviews} reviews`}
+                />
               </ListGroup.Item>
               <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
               <ListGroup.Item>
@@ -60,7 +89,7 @@ const ProductScreen = () => {
               </ListGroup.Item>
             </ListGroup>
           </Col>
-          <Col md={3} style={{ minWidth: '275px' }}>
+          <Col md={3} style={{ minWidth: "275px" }}>
             <Card>
               <ListGroup variant="flush">
                 <ListGroup.Item>
@@ -83,7 +112,11 @@ const ProductScreen = () => {
                 </ListGroup.Item>
                 {product.countInStock > 0 && (
                   <ListGroup.Item>
-                    <QuantitySelector qty={qty} setQty={setQty} maxQty={product.countInStock} />
+                    <QuantitySelector
+                      qty={qty}
+                      setQty={setQty}
+                      maxQty={product.countInStock}
+                    />
                   </ListGroup.Item>
                 )}
                 <ListGroup.Item>

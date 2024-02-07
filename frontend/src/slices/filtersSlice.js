@@ -1,11 +1,13 @@
+// filtersSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const filtersSlice = createSlice({
-  name: 'filter',
+  name: 'filters',
   initialState: {
     availableColors: [],
     selectedColor: '',
-    availableSizes: [],
+    selectedColorImgPath: '',
+    availableSizes: {},
     selectedSize: '',
     availableBrands: [],
     selectedBrand: '',
@@ -16,6 +18,13 @@ const filtersSlice = createSlice({
     },
     setSelectedColor: (state, action) => {
       state.selectedColor = action.payload;
+    },
+    setSelectedColorImgPath: (state, action) => {
+      state.selectedColorImgPath = action.payload
+    },
+    setAvailableSizesForColor: (state, action) => {
+      const { color, sizes } = action.payload;
+      state.availableSizes[color] = sizes;
     },
     setAvailableSizes: (state, action) => {
       state.availableSizes = action.payload;
@@ -35,20 +44,19 @@ const filtersSlice = createSlice({
 export const {
   setAvailableColors,
   setSelectedColor,
-  setAvailableSizes,
+  setAvailableSizesForColor,
   setSelectedSize,
   setAvailableBrands,
   setSelectedBrand,
+  setSelectedColorImgPath
 } = filtersSlice.actions;
-
 
 export const selectAvailableColors = (state) => state.filters.availableColors;
 export const selectSelectedColor = (state) => state.filters.selectedColor;
-export const selectAvailableSizes = (state) => state.filters.availableSizes;
+export const selectSelectedColorImgPath = (state) => state.filters.selectedColorImgPath;
+export const selectAvailableSizesForColor = (state) => state.filters.availableSizes;
 export const selectSelectedSize = (state) => state.filters.selectedSize;
 export const selectAvailableBrands = (state) => state.filters.availableBrands;
 export const selectSelectedBrand = (state) => state.filters.selectedBrand;
-
-
 
 export default filtersSlice.reducer;

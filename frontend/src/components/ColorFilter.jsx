@@ -5,11 +5,15 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   selectAvailableColors,
   setSelectedColor,
+  setSelectedColorImgPath,
+  selectSelectedColor
 } from "../slices/filtersSlice";
 
 const ColorFilter = ({ selectedColor, onColorClick }) => {
   const availableColors = useSelector(selectAvailableColors);
+  const colorTransfer = useSelector(selectSelectedColor)
   const dispatch = useDispatch();
+
 
   return (
     <ButtonGroup className="mb-3">
@@ -20,6 +24,7 @@ const ColorFilter = ({ selectedColor, onColorClick }) => {
           onClick={() => {
             onColorClick(colorObj.color);
             dispatch(setSelectedColor(colorObj.color));
+            dispatch(setSelectedColorImgPath(colorObj.path))
           }}
         >
           {/* You can add a color indicator or text here */}

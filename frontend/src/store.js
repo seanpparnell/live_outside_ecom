@@ -11,7 +11,7 @@ const store = configureStore({
     cart: cartSliceReducer,
     auth: authSliceReducer,
     category: categorySliceReducer,
-    filter: filtersSliceReducer,
+    filters: filtersSliceReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),
