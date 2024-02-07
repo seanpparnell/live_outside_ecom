@@ -23,15 +23,18 @@ import {
   selectSelectedColorImgPath,
   setSelectedColor,
   setSelectedColorImgPath,
-  selectSelectedColor
+  selectSelectedColor,
+  setAvailableSizesQtyForColor,
+  selectAvailableSizesQtyForColor
 } from "../slices/filtersSlice";
 
 const ProductScreen = () => {
-  const { id: productId, color: colorName } = useParams();
+  const { id: productId } = useParams();
   const [qty, setQty] = useState(1);
   const [selectedColorLocal, setSelectedColorLocal] = useState(""); // Local state to manage selected color
   const dispatch = useDispatch();
-  const highlightColor = useSelector(selectSelectedColor)
+  const highlightColor = useSelector(selectSelectedColor);
+  const availableSizesForColor = useSelector(selectAvailableSizesQtyForColor);
 
   const {
     data: product,
@@ -39,17 +42,49 @@ const ProductScreen = () => {
     error,
   } = useGetProductDetailsQuery(productId);
 
+  useEffect(() => {
+    if (highlightColor && product && product.variations) {
+      const selectedVariation = product.variations.find(
+        (variation) => variation.color === highlightColor
+      );
+      if (selectedVariation) {
+        dispatch(
+          setAvailableSizesQtyForColor({
+            color: highlightColor,
+            sizes: selectedVariation.sizes,
+          })
+        );
+      }
+    }
+  }, [highlightColor, product, dispatch]);
+  
+  const getSizes = (object) => {
+    const sizes = [];
+  if (object && object.sizes) { // Check if object and object.sizes are defined
+    object.sizes.forEach((i) => {
+      sizes.push(i.size);
+    });
+  }
+  return sizes;
+  }
+
+  const sizes = getSizes(availableSizesForColor)
+
   const addToCartHandler = () => {
     dispatch(addToCart({ ...product, qty }));
   };
 
   const colorImgPath = useSelector(selectSelectedColorImgPath);
 
+
+
+
   // Function to handle color change event
   const handleColorChange = (color) => {
     setSelectedColorLocal(color);
     dispatch(setSelectedColor(color)); // Dispatch action to update selected color in Redux store
     dispatch(setSelectedColorImgPath(color)); // Dispatch action to update selected color image path in Redux store
+    
   };
 
   return (
@@ -72,6 +107,7 @@ const ProductScreen = () => {
               onColorClick={handleColorChange}
             />
           </Col>
+          <SizeFilter sizes={sizes} />
           <Col md={4}>
             <ListGroup variant="flush">
               <ListGroup.Item>

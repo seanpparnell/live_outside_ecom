@@ -1,18 +1,19 @@
 import React from 'react';
 import { ButtonGroup, Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectAvailableSizes, setSelectedSize } from '../slices/filtersSlice';
+import { selectAvailableSizesQtyForColor, setSelectedSize, selectSelectedSize } from '../slices/filtersSlice';
 
-const SizeFilter = () => {
-  const availableSizes = useSelector(selectAvailableSizes);
+const SizeFilter = ({sizes}) => {
   const dispatch = useDispatch();
+  const selectedSize = useSelector(selectSelectedSize);
+  
 
   return (
     <ButtonGroup className="mb-3">
-      {availableSizes.map((size) => (
+      {sizes.map((size) => (
         <Button
           key={size}
-          variant="secondary"
+          variant={selectedSize === size ? "primary" : "secondary"}
           onClick={() => dispatch(setSelectedSize(size))}
         >
           {size}

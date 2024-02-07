@@ -11,7 +11,6 @@ import {
 
 const ColorFilter = ({ selectedColor, onColorClick }) => {
   const availableColors = useSelector(selectAvailableColors);
-  const colorTransfer = useSelector(selectSelectedColor)
   const dispatch = useDispatch();
 
 
