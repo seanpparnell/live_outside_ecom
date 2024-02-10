@@ -24,17 +24,23 @@ import {
   setSelectedColor,
   setSelectedColorImgPath,
   selectSelectedColor,
+  setSelectedSize,
   setAvailableSizesQtyForColor,
-  selectAvailableSizesQtyForColor
+  selectAvailableSizesQtyForColor,
+  selectQtyForSizeColor,
+  setQtyForSizeColor,
 } from "../slices/filtersSlice";
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
-  const [qty, setQty] = useState(1);
   const [selectedColorLocal, setSelectedColorLocal] = useState(""); // Local state to manage selected color
   const dispatch = useDispatch();
   const highlightColor = useSelector(selectSelectedColor);
   const availableSizesForColor = useSelector(selectAvailableSizesQtyForColor);
+  const colorImgPath = useSelector(selectSelectedColorImgPath);
+
+
+
 
   const {
     data: product,
@@ -68,15 +74,18 @@ const ProductScreen = () => {
   return sizes;
   }
 
-  const sizes = getSizes(availableSizesForColor)
+  const sizes = getSizes(availableSizesForColor);
 
-  const addToCartHandler = () => {
-    dispatch(addToCart({ ...product, qty }));
-  };
+//   const getQty = (obj) => {
+//     const qty = 1;
+//     console.log(obj)
+//   }
 
-  const colorImgPath = useSelector(selectSelectedColorImgPath);
+// getQty(qtyForSizeColor)
 
-
+  // const addToCartHandler = () => {
+  //   dispatch(addToCart({ ...product, qty }));
+  // };
 
 
   // Function to handle color change event
@@ -86,6 +95,7 @@ const ProductScreen = () => {
     dispatch(setSelectedColorImgPath(color)); // Dispatch action to update selected color image path in Redux store
     
   };
+
 
   return (
     <Container>
@@ -108,6 +118,7 @@ const ProductScreen = () => {
             />
           </Col>
           <SizeFilter sizes={sizes} />
+          <QuantitySelector />
           <Col md={4}>
             <ListGroup variant="flush">
               <ListGroup.Item>
@@ -146,7 +157,7 @@ const ProductScreen = () => {
                     </Col>
                   </Row>
                 </ListGroup.Item>
-                {product.countInStock > 0 && (
+                {/* {product.countInStock > 0 && (
                   <ListGroup.Item>
                     <QuantitySelector
                       qty={qty}
@@ -154,10 +165,10 @@ const ProductScreen = () => {
                       maxQty={product.countInStock}
                     />
                   </ListGroup.Item>
-                )}
+                )} */}
                 <ListGroup.Item>
                   <Button
-                    onClick={addToCartHandler}
+                    // onClick={addToCartHandler}
                     className="btn-block"
                     type="button"
                     disabled={product.countInStock === 0}

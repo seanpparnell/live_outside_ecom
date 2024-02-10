@@ -1,17 +1,17 @@
 // filtersSlice.js
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const filtersSlice = createSlice({
-  name: 'filters',
+  name: "filters",
   initialState: {
     availableColors: [],
-    selectedColor: '',
-    selectedColorImgPath: '',
+    selectedColor: "",
+    selectedColorImgPath: "",
     availableSizesQtyForColor: [], // Correct property name
-    selectedSize: '',
-    selectQtyForSizeColor: {},
+    selectedSize: "",
+    qtyForSizeColor: {},
     availableBrands: [],
-    selectedBrand: '',
+    selectedBrand: "",
   },
   reducers: {
     setAvailableColors: (state, action) => {
@@ -19,19 +19,42 @@ const filtersSlice = createSlice({
     },
     setSelectedColor: (state, action) => {
       state.selectedColor = action.payload;
+      const { selectedColor, selectedSize, availableSizesQtyForColor } = state;
+      if (selectedSize && selectedColor) {
+        const qty =
+          availableSizesQtyForColor[selectedColor]?.find(
+            (item) => item.size === selectedSize
+          )?.countInStock || 0;
+        state.qtyForSizeColor = {
+          color: selectedColor,
+          size: selectedSize,
+          qty,
+        };
+      }
     },
     setSelectedColorImgPath: (state, action) => {
-      state.selectedColorImgPath = action.payload
+      state.selectedColorImgPath = action.payload;
     },
     setAvailableSizesQtyForColor: (state, action) => {
-      state.availableSizesQtyForColor = action.payload
+      state.availableSizesQtyForColor = action.payload;
     },
     setSelectedSize: (state, action) => {
       state.selectedSize = action.payload;
+      const { selectedColor, selectedSize, availableSizesQtyForColor } = state;
+      if (selectedSize && selectedColor) {
+        const qty =
+          availableSizesQtyForColor[selectedColor]?.find(
+            (item) => item.size === selectedSize
+          )?.countInStock || 0;
+        state.qtyForSizeColor = {
+          color: selectedColor,
+          size: selectedSize,
+          qty,
+        };
+      }
     },
     setQtyForSizeColor: (state, action) => {
-      const { color, size, qty } = action.payload;
-      state.qtyForSizeColor[color + size] = qty; // Use a unique key for each color-size combination
+      state.qtyForSizeColor = action.payload;
     },
     setAvailableBrands: (state, action) => {
       state.availableBrands = action.payload;
@@ -50,17 +73,18 @@ export const {
   setQtyForSizeColor,
   setAvailableBrands,
   setSelectedBrand,
-  setSelectedColorImgPath
+  setSelectedColorImgPath,
 } = filtersSlice.actions;
 
 export const selectAvailableColors = (state) => state.filters.availableColors;
 export const selectSelectedColor = (state) => state.filters.selectedColor;
-export const selectSelectedColorImgPath = (state) => state.filters.selectedColorImgPath;
-export const selectAvailableSizesQtyForColor = (state) => state.filters.availableSizesQtyForColor; // Corrected property name
+export const selectSelectedColorImgPath = (state) =>
+  state.filters.selectedColorImgPath;
+export const selectAvailableSizesQtyForColor = (state) =>
+  state.filters.availableSizesQtyForColor; // Corrected property name
 export const selectSelectedSize = (state) => state.filters.selectedSize;
-export const selectQtyForSizeColor = (state) => state.filters.selectedQtyForSizeColor;
+export const selectQtyForSizeColor = (state) => state.filters.qtyForSizeColor;
 export const selectAvailableBrands = (state) => state.filters.availableBrands;
 export const selectSelectedBrand = (state) => state.filters.selectedBrand;
 
 export default filtersSlice.reducer;
-
