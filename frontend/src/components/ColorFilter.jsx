@@ -10,9 +10,10 @@ import {
 } from "../slices/filtersSlice";
 
 const ColorFilter = ({ selectedColor, onColorClick }) => {
+  
   const availableColors = useSelector(selectAvailableColors);
+  
   const dispatch = useDispatch();
-
 
   return (
     <ButtonGroup className="mb-3">
@@ -26,7 +27,6 @@ const ColorFilter = ({ selectedColor, onColorClick }) => {
             dispatch(setSelectedColorImgPath(colorObj.path))
           }}
         >
-          {/* You can add a color indicator or text here */}
           {colorObj.color}
         </Button>
       ))}

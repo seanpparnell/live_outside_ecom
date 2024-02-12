@@ -14,13 +14,19 @@ import { FaAvianex } from "react-icons/fa";
 import { get } from "mongoose";
 
 const Product = ({ product, index, triggerRender }) => {
-  const { _id, name, rating, numReviews, price } =
-    product;
-  const availableColorsRedux = useSelector(selectAvailableColors);
   const [selectedColorLocal, setSelectedColorLocal] = useState("");
+
   const dispatch = useDispatch();
 
-  // Update local state and dispatch to Redux
+  const availableColorsRedux = useSelector(selectAvailableColors);
+  const { _id, name, rating, numReviews, price } = product;
+
+  useEffect(() => {
+    if (!selectedColorLocal && product.defaultColor) {
+      setSelectedColorLocal(product.defaultColor);
+    }
+  }, [selectedColorLocal, product.defaultColor, triggerRender]);
+
   const handleColorChange = (color) => {
     setSelectedColorLocal(color);
     dispatch(setSelectedColor({ color, index }));
@@ -38,13 +44,6 @@ const Product = ({ product, index, triggerRender }) => {
     dispatch(setSelectedColor(selectedColorLocal));
   };
 
-  useEffect(() => {
-    // If no color is selected and there is a defaultColor, use the defaultColor
-    if (!selectedColorLocal && product.defaultColor) {
-      setSelectedColorLocal(product.defaultColor);
-    }
-  }, [selectedColorLocal, product.defaultColor, triggerRender]);
-
   return (
     <Card className="my-3 p-3 rounded product">
       <Link to={`/products/${_id}/${selectedColorLocal}`} onClick={saveImgPath}>
@@ -54,11 +53,11 @@ const Product = ({ product, index, triggerRender }) => {
           variant="top"
         />
       </Link>
-        <ColorFilter
-          availableColors={availableColorsRedux}
-          selectedColor={selectedColorLocal}
-          onColorClick={handleColorChange}
-        />
+      <ColorFilter
+        availableColors={availableColorsRedux}
+        selectedColor={selectedColorLocal}
+        onColorClick={handleColorChange}
+      />
       <Card.Body>
         <Link to={`/products/${_id}/${selectedColorLocal}`}>
           <Card.Title className="product-title" as="div">

@@ -1,23 +1,29 @@
-import React from 'react';
-import { ButtonGroup, Button } from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectAvailableSizesQtyForColor, setSelectedSize, selectSelectedSize, setQtyForSizeColor, selectSelectedColor } from '../slices/filtersSlice';
+import React from "react";
+import { ButtonGroup, Button } from "react-bootstrap";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  selectAvailableSizesQtyForColor,
+  setSelectedSize,
+  selectSelectedSize,
+  setQtyForSizeColor,
+  selectSelectedColor,
+} from "../slices/filtersSlice";
 
-const SizeFilter = ({sizes}) => {
+const SizeFilter = ({ sizes }) => {
   const dispatch = useDispatch();
   const selectedColor = useSelector(selectSelectedColor);
   const selectedSize = useSelector(selectSelectedSize);
   const availableSizesForColor = useSelector(selectAvailableSizesQtyForColor);
 
-  
-    // Function to handle size click
-    const handleSizeClick = (size) => {
-      // Dispatch the selected size to the Redux store
-      dispatch(setSelectedSize(size));
-      const selectedSizeQty = availableSizesForColor.sizes.find(item => item.size === size)?.countInStock || 0;
-      // Dispatch the quantity for the selected size and color to the Redux store
-      dispatch(setQtyForSizeColor({ color: selectedColor, size, qty: selectedSizeQty }));
-    }
+  const handleSizeClick = (size) => {
+    dispatch(setSelectedSize(size));
+    const selectedSizeQty =
+      availableSizesForColor.sizes.find((item) => item.size === size)
+        ?.countInStock || 0;
+    dispatch(
+      setQtyForSizeColor({ color: selectedColor, size, qty: selectedSizeQty })
+    );
+  };
 
   return (
     <ButtonGroup className="mb-3">

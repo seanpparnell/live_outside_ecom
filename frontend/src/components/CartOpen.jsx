@@ -9,6 +9,12 @@ import './CartOpen.css'
 
 const CartOpen = ({isOpen, onClose}) => {
   const [animationClass, setAnimationClass] = useState('');
+  
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const cart = useSelector((state) => state.cart);
+  const {cartItems} = cart;
 
   useEffect(() => {
     if (isOpen) {
@@ -18,14 +24,8 @@ const CartOpen = ({isOpen, onClose}) => {
     }
   }, [isOpen]);
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const cart = useSelector((state) => state.cart);
-  const {cartItems} = cart;
-
   const removeFromCartHandler = async (id) => {
     dispatch(removeFromCart(id));
-
   };
   
   return (

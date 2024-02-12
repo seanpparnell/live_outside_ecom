@@ -11,6 +11,8 @@ import {
 } from "../slices/filtersSlice";
 
 const ProductList = ({ categoryId }) => {
+  const [triggerRender, setTriggerRender] = useState(false);
+
   const dispatch = useDispatch();
 
   const {
@@ -19,6 +21,8 @@ const ProductList = ({ categoryId }) => {
     error,
     refetch,
   } = useGetProductsInCategoryQuery(categoryId);
+  
+  const availableColorsRedux = useSelector(selectAvailableColors);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -47,26 +51,24 @@ const ProductList = ({ categoryId }) => {
     fetchProducts();
   }, [categoryId, refetch, dispatch]);
 
-  // Use 'useSelector' to get the actual value of 'availableColors'
-  const availableColorsRedux = useSelector(selectAvailableColors);
-
-  // Add a state to trigger re-renders when availableColors are updated
-  const [triggerRender, setTriggerRender] = useState(false);
-
   useEffect(() => {
-    // Trigger re-render when availableColors are updated
     setTriggerRender((prev) => !prev);
-  }, [availableColorsRedux]); // Use 'availableColorsRedux' instead of 'selectAvailableColors'
+  }, [availableColorsRedux]);
+
+  const createVariantProduct = (product, image) => {
+    const variantProduct = { ...product };
+    variantProduct.defaultColor = image.color;
+    variantProduct.images = [image];
+    return variantProduct;
+  };
 
   return (
     <Container>
-      {/* This is my Product List */}
       {isLoading && <Loader />}
       {error && <Message variant="danger">{error}</Message>}
       {!isLoading && !error && (
         <Row>
           {products.map((product) => {
-            // If the product has color variations, render a card for each variation
             if (product.images && product.images.length > 1) {
               return product.images.map((image, index) => (
                 <Col
@@ -86,7 +88,6 @@ const ProductList = ({ categoryId }) => {
                 </Col>
               ));
             } else {
-              // If there is only one color or no color information, render a single card
               return (
                 <Col key={product._id} xs={12} sm={6} md={4} lg={3}>
                   <Product key={product._id} product={product} />
@@ -98,14 +99,6 @@ const ProductList = ({ categoryId }) => {
       )}
     </Container>
   );
-};
-
-// Helper function to create a new product object with a specific color
-const createVariantProduct = (product, image) => {
-  const variantProduct = { ...product };
-  variantProduct.defaultColor = image.color;
-  variantProduct.images = [image];
-  return variantProduct;
 };
 
 export default ProductList;

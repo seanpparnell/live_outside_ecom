@@ -10,11 +10,9 @@ const CategoryBar = () => {
 
   const dispatch = useDispatch();
   
-
   const handleCategoryClick = (category) => {
     dispatch(addCategoryId(category.parentCategory._id));
   };
-
 
   if (isLoading) {
     return <p>Loading categories</p>;

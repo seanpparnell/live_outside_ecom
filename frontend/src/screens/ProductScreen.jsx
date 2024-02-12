@@ -32,21 +32,20 @@ import {
 } from "../slices/filtersSlice";
 
 const ProductScreen = () => {
+  const [selectedColorLocal, setSelectedColorLocal] = useState("");
+
   const { id: productId } = useParams();
-  const [selectedColorLocal, setSelectedColorLocal] = useState(""); // Local state to manage selected color
   const dispatch = useDispatch();
-  const highlightColor = useSelector(selectSelectedColor);
-  const availableSizesForColor = useSelector(selectAvailableSizesQtyForColor);
-  const colorImgPath = useSelector(selectSelectedColorImgPath);
-
-
-
 
   const {
     data: product,
     isLoading,
     error,
   } = useGetProductDetailsQuery(productId);
+
+  const highlightColor = useSelector(selectSelectedColor);
+  const availableSizesForColor = useSelector(selectAvailableSizesQtyForColor);
+  const colorImgPath = useSelector(selectSelectedColorImgPath);
 
   useEffect(() => {
     if (highlightColor && product && product.variations) {
@@ -63,39 +62,24 @@ const ProductScreen = () => {
       }
     }
   }, [highlightColor, product, dispatch]);
-  
+
   const getSizes = (object) => {
     const sizes = [];
-  if (object && object.sizes) { // Check if object and object.sizes are defined
-    object.sizes.forEach((i) => {
-      sizes.push(i.size);
-    });
-  }
-  return sizes;
-  }
+    if (object && object.sizes) {
+      object.sizes.forEach((i) => {
+        sizes.push(i.size);
+      });
+    }
+    return sizes;
+  };
 
   const sizes = getSizes(availableSizesForColor);
 
-//   const getQty = (obj) => {
-//     const qty = 1;
-//     console.log(obj)
-//   }
-
-// getQty(qtyForSizeColor)
-
-  // const addToCartHandler = () => {
-  //   dispatch(addToCart({ ...product, qty }));
-  // };
-
-
-  // Function to handle color change event
   const handleColorChange = (color) => {
     setSelectedColorLocal(color);
-    dispatch(setSelectedColor(color)); // Dispatch action to update selected color in Redux store
-    dispatch(setSelectedColorImgPath(color)); // Dispatch action to update selected color image path in Redux store
-    
+    dispatch(setSelectedColor(color));
+    dispatch(setSelectedColorImgPath(color));
   };
-
 
   return (
     <Container>
@@ -157,15 +141,6 @@ const ProductScreen = () => {
                     </Col>
                   </Row>
                 </ListGroup.Item>
-                {/* {product.countInStock > 0 && (
-                  <ListGroup.Item>
-                    <QuantitySelector
-                      qty={qty}
-                      setQty={setQty}
-                      maxQty={product.countInStock}
-                    />
-                  </ListGroup.Item>
-                )} */}
                 <ListGroup.Item>
                   <Button
                     // onClick={addToCartHandler}

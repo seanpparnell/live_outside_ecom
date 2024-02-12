@@ -9,10 +9,8 @@
 
 .cart-item {
   width: 100%;
-  /* align-items: center; */
   display: flex;
   justify-content: center;
-  /* background-color: lightblue; */
   background-color: pink;
 }
 
