@@ -17,7 +17,7 @@ import ColorFilter from "../components/ColorFilter";
 import SizeFilter from "../components/SizeFilter";
 import QuantitySelector from "../components/QuantitySelector";
 import { useGetProductDetailsQuery } from "../slices/productsApiSlice";
-import { addToCart } from "../slices/cartSlice";
+import { addToCart, selectCartItem } from "../slices/cartSlice";
 import "./ProductScreen.css";
 import {
   selectSelectedColorImgPath,
@@ -29,13 +29,16 @@ import {
   selectAvailableSizesQtyForColor,
   selectQtyForSizeColor,
   setQtyForSizeColor,
+  selectSelectedSize,
 } from "../slices/filtersSlice";
 
 const ProductScreen = () => {
-  const [selectedColorLocal, setSelectedColorLocal] = useState("");
 
+  const qty = useSelector(selectQtyForSizeColor);
+  const maxQty = qty ? qty.qty : 1;
   const { id: productId } = useParams();
   const dispatch = useDispatch();
+
 
   const {
     data: product,
@@ -46,6 +49,7 @@ const ProductScreen = () => {
   const highlightColor = useSelector(selectSelectedColor);
   const availableSizesForColor = useSelector(selectAvailableSizesQtyForColor);
   const colorImgPath = useSelector(selectSelectedColorImgPath);
+  const selectedSize = useSelector(selectSelectedSize);
 
   useEffect(() => {
     if (highlightColor && product && product.variations) {
@@ -76,10 +80,13 @@ const ProductScreen = () => {
   const sizes = getSizes(availableSizesForColor);
 
   const handleColorChange = (color) => {
-    setSelectedColorLocal(color);
     dispatch(setSelectedColor(color));
     dispatch(setSelectedColorImgPath(color));
   };
+
+  const addToCartHandler = () => {
+    dispatch(addToCart({product, size: selectedSize, color: highlightColor, quantity: maxQty }))
+  }
 
   return (
     <Container>
@@ -102,7 +109,7 @@ const ProductScreen = () => {
             />
           </Col>
           <SizeFilter sizes={sizes} />
-          <QuantitySelector />
+          <QuantitySelector maxQty={maxQty}/>
           <Col md={4}>
             <ListGroup variant="flush">
               <ListGroup.Item>
@@ -143,10 +150,9 @@ const ProductScreen = () => {
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Button
-                    // onClick={addToCartHandler}
+                    onClick={addToCartHandler}
                     className="btn-block"
                     type="button"
-                    disabled={product.countInStock === 0}
                   >
                     Add to Cart
                   </Button>

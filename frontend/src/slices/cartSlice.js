@@ -12,17 +12,27 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      const item = action.payload;
+      const { product, size, color, selectedColorImgPath, quantity } = action.payload;
 
-      const existItem = state.cartItems.find((x) => x._id === item._id);
+      const existItemIndex = state.cartItems.findIndex((x) => x._id === product._id && x.size === size && x.color === color);
 
-      if (existItem) {
-        state.cartItems = state.cartItems.map((x) => x._id === existItem._id ? item : x)
+      if (existItemIndex !== -1) {
+        // If the item already exists in the cart, update its quantity
+        state.cartItems[existItemIndex].qty += 1;
       } else {
-        state.cartItems = [...state.cartItems, item]
+        // If the item doesn't exist, add it to the cart
+        state.cartItems.push({
+          _id: product._id,
+          name: product.name,
+          description: product.description,
+          path: selectedColorImgPath,
+          color: color,
+          size: size,
+          qty: quantity,
+          itemPrice: product.price,
+        });
       }
-
-      return updateCart(state)
+      return updateCart(state);
     },
 
     removeFromCart: (state, action) => {
@@ -41,16 +51,9 @@ const cartSlice = createSlice({
 
       return updateCart(state);
     },
-
-    openCart: (state) => {
-      state.isCartOpen = true;
-    },
-    closeCart: (state) => {
-      state.isCartOpen = false
-    }
   }
 });
 
-export const { addToCart, openCart, closeCart, removeFromCart, updateCartItemQuantity } = cartSlice.actions;
+export const { addToCart, removeFromCart, updateCartItemQuantity } = cartSlice.actions;
 
 export default cartSlice.reducer;
