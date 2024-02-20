@@ -105,6 +105,8 @@ const ProductScreen = () => {
   
   
   
+  const qtyForSizeColor = useSelector(selectQtyForSizeColor);
+  console.log(qtyForSizeColor)
 
   const addToCartHandler = () => {
     dispatch(
@@ -113,6 +115,8 @@ const ProductScreen = () => {
         size: selectedSize,
         color: highlightColor,
         quantity: maxQty,
+        imgPath: colorImgPath,
+        countInStock: qtyForSizeColor.qty
       })
     );
   };

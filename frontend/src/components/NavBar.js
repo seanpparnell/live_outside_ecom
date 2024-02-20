@@ -10,6 +10,7 @@ import CategoryBar from "./CategoryBar";
 const NavBar = () => {
 
   const cartItems = useSelector((state) => state.cart.cartItems);
+  const uniqueItemsCount = cartItems.length
 
   return (
     <header>
@@ -52,7 +53,7 @@ const NavBar = () => {
                         className="position-relative"
                         style={{ fontSize: "1.5rem" }}
                       />
-                      {cartItems.length > 0 && (
+                      {uniqueItemsCount > 0 && (
                         <span
                           className="badge badge-pill badge-primary"
                           style={{
@@ -64,7 +65,7 @@ const NavBar = () => {
                             borderRadius: "100%",
                           }}
                         >
-                          {cartItems.reduce((a, c) => a + c.qty, 0)}
+                          {uniqueItemsCount}
                         </span>
                       )}
                     </div>

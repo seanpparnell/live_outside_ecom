@@ -18,9 +18,10 @@ import "./CartScreen.css";
 const CartScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
+  console.log(cartItems);
 
   const removeFromCartHandler = async (id) => {
     dispatch(removeFromCart(id));
@@ -31,8 +32,13 @@ const CartScreen = () => {
   };
 
   const checkoutCartHandler = () => {
-    navigate('/login?redirect=/shipping')
-  }
+    navigate("/login?redirect=/shipping");
+  };
+
+  
+
+  const subtotal = cartItems.reduce((acc, item) => acc + item.qty * item.itemPrice, 0)
+  console.log('subtotal', subtotal)
 
   return (
     <div>
@@ -54,14 +60,14 @@ const CartScreen = () => {
                             width: "200px",
                             objectFit: "contain",
                           }}
-                          src={item.image}
+                          src={item.imgPath}
                           alt={item.name}
                           fluid
                           rounded
                         />
                         <Link to={`/products/${item._id}`}>{item.name}</Link>
                       </Col>
-                      <Col>${item.price}</Col>
+                      <Col>${item.itemPrice}</Col>
                       <Col>
                         <QuantitySelector
                           qty={item.qty}
@@ -104,7 +110,7 @@ const CartScreen = () => {
               <h6>
                 ${" "}
                 {cartItems
-                  .reduce((acc, item) => acc + item.qty * item.price, 0)
+                  .reduce((acc, item) => acc + item.qty * item.itemPrice, 0)
                   .toFixed(2)}
               </h6>
             </ListGroup.Item>
