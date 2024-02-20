@@ -20,18 +20,11 @@ const filtersSlice = createSlice({
     },
     setSelectedColor: (state, action) => {
       state.selectedColor = action.payload;
-      const { selectedColor, selectedSize, availableSizesQtyForColor } = state;
-      if (selectedSize && selectedColor) {
-        const qty =
-          availableSizesQtyForColor[selectedColor]?.find(
-            (item) => item.size === selectedSize
-          )?.countInStock || 0;
-        state.qtyForSizeColor = {
-          color: selectedColor,
-          size: selectedSize,
-          qty,
-        };
-      }
+      // Update qtyForSizeColor with the selected color
+      state.qtyForSizeColor = {
+        ...state.qtyForSizeColor,
+        color: action.payload,
+      };
     },
     setSelectedColorImgPath: (state, action) => {
       state.selectedColorImgPath = action.payload;
@@ -55,7 +48,7 @@ const filtersSlice = createSlice({
       }
     },
     setQtyForSizeColor: (state, action) => {
-      state.qtyForSizeColor = action.payload;
+      state.qtyForSizeColor = { ...action.payload };
     },
     setAvailableBrands: (state, action) => {
       state.availableBrands = action.payload;
@@ -64,7 +57,7 @@ const filtersSlice = createSlice({
       state.selectedBrand = action.payload;
     },
     setSelectedQuantity: (state, action) => {
-      state.quantity = action.payload;
+      state.selectedQuantity = action.payload;
     },
   },
 });
@@ -91,6 +84,6 @@ export const selectSelectedSize = (state) => state.filters.selectedSize;
 export const selectQtyForSizeColor = (state) => state.filters.qtyForSizeColor;
 export const selectAvailableBrands = (state) => state.filters.availableBrands;
 export const selectSelectedBrand = (state) => state.filters.selectedBrand;
-export const selectSelectedQuantity = (state) => state.filters.quantity;
+export const selectSelectedQuantity = (state) => state.filters.selectedQuantity;
 
 export default filtersSlice.reducer;

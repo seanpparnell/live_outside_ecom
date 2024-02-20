@@ -33,12 +33,10 @@ import {
 } from "../slices/filtersSlice";
 
 const ProductScreen = () => {
-
   const qty = useSelector(selectQtyForSizeColor);
   const maxQty = qty ? qty.qty : 1;
   const { id: productId } = useParams();
   const dispatch = useDispatch();
-
 
   const {
     data: product,
@@ -79,14 +77,45 @@ const ProductScreen = () => {
 
   const sizes = getSizes(availableSizesForColor);
 
-  const handleColorChange = (color) => {
+  const handleColorChange = (color, selectedSize, availableSizesForColor) => {
     dispatch(setSelectedColor(color));
     dispatch(setSelectedColorImgPath(color));
+  
+    // Get the new quantity based on the selected size and color
+    const newQuantityObj = availableSizesForColor.sizes.find(
+      (sizeObj) => sizeObj.size === selectedSize
+    );
+    const newQuantity = newQuantityObj ? newQuantityObj.countInStock : 0;
+  
+    console.log("Dispatching action with payload:", {
+      color,
+      size: selectedSize,
+      qty: newQuantity,
+    });
+  
+    // Update qtyForSizeColor with the new quantity
+    dispatch(
+      setQtyForSizeColor({
+        color,
+        size: selectedSize,
+        qty: newQuantity,
+      })
+    );
   };
+  
+  
+  
 
   const addToCartHandler = () => {
-    dispatch(addToCart({product, size: selectedSize, color: highlightColor, quantity: maxQty }))
-  }
+    dispatch(
+      addToCart({
+        product,
+        size: selectedSize,
+        color: highlightColor,
+        quantity: maxQty,
+      })
+    );
+  };
 
   return (
     <Container>
@@ -105,11 +134,11 @@ const ProductScreen = () => {
             <Image src={colorImgPath} alt={product.name} fluid />
             <ColorFilter
               selectedColor={highlightColor}
-              onColorClick={handleColorChange}
+              onColorClick={(color) => handleColorChange(color, selectedSize, availableSizesForColor)}
             />
           </Col>
           <SizeFilter sizes={sizes} />
-          <QuantitySelector maxQty={maxQty}/>
+          <QuantitySelector maxQty={maxQty} />
           <Col md={4}>
             <ListGroup variant="flush">
               <ListGroup.Item>

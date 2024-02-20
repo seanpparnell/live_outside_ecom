@@ -9,12 +9,12 @@ const QuantitySelector = ({ maxQty }) => {
   const selectedQuantity = useSelector(selectSelectedQuantity);
 
   useEffect(() => {
-    dispatch(setSelectedQuantity(1)); // Initialize selected quantity to 1 when maxQty changes
+    dispatch(setSelectedQuantity(1));
   }, [maxQty, dispatch]);
 
   const incrementQty = () => {
     if (selectedQuantity < maxQty) {
-      dispatch(setSelectedQuantity(selectedQuantity + 1)); // Increment selected quantity
+      dispatch(setSelectedQuantity(selectedQuantity + 1)); 
     }
   };
 
