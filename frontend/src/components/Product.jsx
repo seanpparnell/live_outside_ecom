@@ -9,6 +9,7 @@ import {
   setSelectedColor,
   setSelectedColorImgPath,
   selectAvailableColors,
+  setSelectedSize,
 } from "../slices/filtersSlice";
 import { FaAvianex } from "react-icons/fa";
 import { get } from "mongoose";
@@ -21,7 +22,6 @@ const Product = ({ product, index, triggerRender }) => {
   const availableColorsRedux = useSelector(selectAvailableColors);
   const { _id, name, rating, numReviews, price, variations } = product;
   
-  console.log(variations[0])
 
   useEffect(() => {
     if (!selectedColorLocal && product.defaultColor) {
@@ -42,8 +42,10 @@ const Product = ({ product, index, triggerRender }) => {
   };
 
   const saveImgPath = (event) => {
+    const selectedSize = selectedColorLocal === "none" ? "One Size Fits All" : ""; // Set size to "One Size Fits All" if color is "none"
     dispatch(setSelectedColorImgPath(getImagePath(selectedColorLocal)));
     dispatch(setSelectedColor(selectedColorLocal));
+    dispatch(setSelectedSize(selectedSize)); // Dispatch selected size
   };
 
 

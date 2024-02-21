@@ -68,7 +68,7 @@ const products = [
       {
         color: 'none', // Represents "No Color" for tents
         sizes: [
-          { size: 'One Size Fits All', countInStock: 7 },
+          { size: 'One Size Fits All', countInStock: 40 },
         ],
       },
     ],
@@ -92,7 +92,7 @@ const products = [
       {
         color: 'none', // Represents "No Color" for tents
         sizes: [
-          { size: 'One Size Fits All', countInStock: 7 },
+          { size: 'One Size Fits All', countInStock: 2 },
         ],
       },
     ],
@@ -116,7 +116,7 @@ const products = [
       {
         color: 'none', // Represents "No Color" for tents
         sizes: [
-          { size: 'One Size Fits All', countInStock: 7 },
+          { size: 'One Size Fits All', countInStock: 21 },
         ],
       },
     ],
@@ -140,7 +140,7 @@ const products = [
       {
         color: 'none', // Represents "No Color" for tents
         sizes: [
-          { size: 'One Size Fits All', countInStock: 7 },
+          { size: 'One Size Fits All', countInStock: 18 },
         ],
       },
     ],
@@ -164,7 +164,7 @@ const products = [
       {
         color: 'none', // Represents "No Color" for tents
         sizes: [
-          { size: 'One Size Fits All', countInStock: 7 },
+          { size: 'One Size Fits All', countInStock: 5 },
         ],
       },
     ],
@@ -188,7 +188,7 @@ const products = [
       {
         color: 'none', // Represents "No Color" for tents
         sizes: [
-          { size: 'One Size Fits All', countInStock: 7 },
+          { size: 'One Size Fits All', countInStock: 2 },
         ],
       },
     ],

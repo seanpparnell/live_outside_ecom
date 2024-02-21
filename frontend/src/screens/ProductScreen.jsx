@@ -39,7 +39,7 @@ const ProductScreen = () => {
   const dispatch = useDispatch();
 
   const {
-    
+
     data: product,
     isLoading,
     error,
@@ -53,7 +53,28 @@ const ProductScreen = () => {
   const selectedSize = useSelector(selectSelectedSize);
 
   useEffect(() => {
-    if (highlightColor && product && product.variations) {
+    if (highlightColor === "none" && product && product.variations) {
+      // Find the variation with color 'none' and size 'one size fits all'
+      const noneColorVariation = product.variations.find(
+        (variation) =>
+          variation.color === "none" &&
+          variation.sizes.some((size) => size.size === "One Size Fits All")
+      );
+  
+      if (noneColorVariation) {
+        const countInStock = noneColorVariation.sizes.find(
+          (size) => size.size === "One Size Fits All"
+        ).countInStock;
+  
+        dispatch(
+          setQtyForSizeColor({
+            color: "none",
+            size: "One Size Fits All",
+            qty: countInStock,
+          })
+        );
+      }
+    } else if (highlightColor && product && product.variations) {
       const selectedVariation = product.variations.find(
         (variation) => variation.color === highlightColor
       );
@@ -67,6 +88,7 @@ const ProductScreen = () => {
       }
     }
   }, [highlightColor, product, dispatch]);
+  
 
   const getSizes = (object) => {
     const sizes = [];
@@ -90,12 +112,6 @@ const ProductScreen = () => {
     );
     const newQuantity = newQuantityObj ? newQuantityObj.countInStock : 0;
 
-    console.log("Dispatching action with payload:", {
-      color,
-      size: selectedSize,
-      qty: newQuantity,
-    });
-
     // Update qtyForSizeColor with the new quantity
     dispatch(
       setQtyForSizeColor({
@@ -107,7 +123,6 @@ const ProductScreen = () => {
   };
 
   const qtyForSizeColor = useSelector(selectQtyForSizeColor);
-  console.log(qtyForSizeColor);
 
   const addToCartHandler = () => {
     dispatch(
