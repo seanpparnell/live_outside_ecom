@@ -15,11 +15,13 @@ import { get } from "mongoose";
 
 const Product = ({ product, index, triggerRender }) => {
   const [selectedColorLocal, setSelectedColorLocal] = useState("");
-
+  
   const dispatch = useDispatch();
-
+  
   const availableColorsRedux = useSelector(selectAvailableColors);
-  const { _id, name, rating, numReviews, price } = product;
+  const { _id, name, rating, numReviews, price, variations } = product;
+  
+  console.log(variations[0])
 
   useEffect(() => {
     if (!selectedColorLocal && product.defaultColor) {
@@ -44,6 +46,7 @@ const Product = ({ product, index, triggerRender }) => {
     dispatch(setSelectedColor(selectedColorLocal));
   };
 
+
   return (
     <Card className="my-3 p-3 rounded product">
       <Link to={`/products/${_id}/${selectedColorLocal}`} onClick={saveImgPath}>
@@ -53,11 +56,13 @@ const Product = ({ product, index, triggerRender }) => {
           variant="top"
         />
       </Link>
-      <ColorFilter
-        availableColors={availableColorsRedux}
-        selectedColor={selectedColorLocal}
-        onColorClick={handleColorChange}
-      />
+      {variations && variations[0].name !== "none" && (
+        <ColorFilter
+          availableColors={availableColorsRedux}
+          selectedColor={selectedColorLocal}
+          onColorClick={handleColorChange}
+        />
+      )}
       <Card.Body>
         <Link to={`/products/${_id}/${selectedColorLocal}`}>
           <Card.Title className="product-title" as="div">

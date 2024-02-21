@@ -39,10 +39,13 @@ const ProductScreen = () => {
   const dispatch = useDispatch();
 
   const {
+    
     data: product,
     isLoading,
     error,
   } = useGetProductDetailsQuery(productId);
+
+  console.log(product);
 
   const highlightColor = useSelector(selectSelectedColor);
   const availableSizesForColor = useSelector(selectAvailableSizesQtyForColor);
@@ -80,19 +83,19 @@ const ProductScreen = () => {
   const handleColorChange = (color, selectedSize, availableSizesForColor) => {
     dispatch(setSelectedColor(color));
     dispatch(setSelectedColorImgPath(color));
-  
+
     // Get the new quantity based on the selected size and color
     const newQuantityObj = availableSizesForColor.sizes.find(
       (sizeObj) => sizeObj.size === selectedSize
     );
     const newQuantity = newQuantityObj ? newQuantityObj.countInStock : 0;
-  
+
     console.log("Dispatching action with payload:", {
       color,
       size: selectedSize,
       qty: newQuantity,
     });
-  
+
     // Update qtyForSizeColor with the new quantity
     dispatch(
       setQtyForSizeColor({
@@ -102,11 +105,9 @@ const ProductScreen = () => {
       })
     );
   };
-  
-  
-  
+
   const qtyForSizeColor = useSelector(selectQtyForSizeColor);
-  console.log(qtyForSizeColor)
+  console.log(qtyForSizeColor);
 
   const addToCartHandler = () => {
     dispatch(
@@ -116,7 +117,7 @@ const ProductScreen = () => {
         color: highlightColor,
         quantity: maxQty,
         imgPath: colorImgPath,
-        countInStock: qtyForSizeColor.qty
+        countInStock: qtyForSizeColor.qty,
       })
     );
   };
@@ -136,12 +137,18 @@ const ProductScreen = () => {
         <Row>
           <Col md={5}>
             <Image src={colorImgPath} alt={product.name} fluid />
-            <ColorFilter
-              selectedColor={highlightColor}
-              onColorClick={(color) => handleColorChange(color, selectedSize, availableSizesForColor)}
-            />
+            {product.variations && product.variations[0].color !== "none" && (
+              <ColorFilter
+                selectedColor={highlightColor}
+                onColorClick={(color) =>
+                  handleColorChange(color, selectedSize, availableSizesForColor)
+                }
+              />
+            )}
           </Col>
-          <SizeFilter sizes={sizes} />
+          {product.variations && product.variations[0].color !== "none" && (
+            <SizeFilter sizes={sizes} />
+          )}
           <QuantitySelector maxQty={maxQty} />
           <Col md={4}>
             <ListGroup variant="flush">
@@ -171,7 +178,7 @@ const ProductScreen = () => {
                     </Col>
                   </Row>
                 </ListGroup.Item>
-                <ListGroup.Item>
+                {/* <ListGroup.Item>
                   <Row>
                     <Col>Status:</Col>
                     <Col>
@@ -180,7 +187,7 @@ const ProductScreen = () => {
                       </strong>
                     </Col>
                   </Row>
-                </ListGroup.Item>
+                </ListGroup.Item> */}
                 <ListGroup.Item>
                   <Button
                     onClick={addToCartHandler}

@@ -62,6 +62,7 @@ const ProductList = ({ categoryId }) => {
     return variantProduct;
   };
 
+
   return (
     <Container>
       {isLoading && <Loader />}
