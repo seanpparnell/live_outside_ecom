@@ -28,25 +28,25 @@ const products = [
       {
         color: 'blue',
         sizes: [
-          { size: 'small', countInStock: 1 },
-          { size: 'medium', countInStock: 2 },
-          { size: 'large', countInStock: 3 },
+          { size: 'small', countInStock: 4 },
+          { size: 'medium', countInStock: 5 },
+          { size: 'large', countInStock: 6 },
         ],
       },
       {
         color: 'brown',
         sizes: [
-          { size: 'small', countInStock: 1 },
-          { size: 'medium', countInStock: 2 },
-          { size: 'large', countInStock: 3 },
+          { size: 'small', countInStock: 7 },
+          { size: 'medium', countInStock: 8 },
+          { size: 'large', countInStock: 9 },
         ],
       },
       {
         color: 'purple',
         sizes: [
-          { size: 'small', countInStock: 1 },
-          { size: 'medium', countInStock: 2 },
-          { size: 'large', countInStock: 3 },
+          { size: 'small', countInStock: 10 },
+          { size: 'medium', countInStock: 11 },
+          { size: 'large', countInStock: 12 },
         ],
       },
     ],

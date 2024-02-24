@@ -20,11 +20,26 @@ const filtersSlice = createSlice({
     },
     setSelectedColor: (state, action) => {
       state.selectedColor = action.payload;
-      // Update qtyForSizeColor with the selected color
+      // Retain the selected size if it's available for the new color
+      const { selectedColor, selectedSize, availableSizesQtyForColor } = state;
+      const sizeAvailableForNewColor = availableSizesQtyForColor[selectedColor]?.some(
+        (sizeObj) => sizeObj.size === selectedSize
+      );
+      if (!sizeAvailableForNewColor) {
+        state.selectedSize = ""; // Reset selected size when it's not available for the new color
+      }
+
+      // Update qtyForSizeColor with the selected color and quantity for the selected size (if available)
+      const qty =
+        availableSizesQtyForColor[selectedColor]?.find(
+          (item) => item.size === selectedSize
+        )?.countInStock || 0;
       state.qtyForSizeColor = {
-        ...state.qtyForSizeColor,
-        color: action.payload,
+        color: selectedColor,
+        size: selectedSize,
+        qty,
       };
+      console.log('setSelectedColor qty:', qty)
     },
     setSelectedColorImgPath: (state, action) => {
       state.selectedColorImgPath = action.payload;
@@ -45,6 +60,7 @@ const filtersSlice = createSlice({
           size: selectedSize,
           qty,
         };
+        console.log('setSelectedSize qty:', qty)
       }
     },
     setQtyForSizeColor: (state, action) => {

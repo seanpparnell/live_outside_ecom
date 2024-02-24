@@ -30,27 +30,27 @@ import {
   selectQtyForSizeColor,
   setQtyForSizeColor,
   selectSelectedSize,
+  selectSelectedQuantity
 } from "../slices/filtersSlice";
 
 const ProductScreen = () => {
-  const qty = useSelector(selectQtyForSizeColor);
-  const maxQty = qty ? qty.qty : 1;
+  
   const { id: productId } = useParams();
   const dispatch = useDispatch();
 
   const {
-
     data: product,
     isLoading,
     error,
   } = useGetProductDetailsQuery(productId);
 
-  console.log(product);
+  // console.log(product);
 
   const highlightColor = useSelector(selectSelectedColor);
   const availableSizesForColor = useSelector(selectAvailableSizesQtyForColor);
   const colorImgPath = useSelector(selectSelectedColorImgPath);
   const selectedSize = useSelector(selectSelectedSize);
+  const selectedQuantity = useSelector(selectSelectedQuantity);
 
   useEffect(() => {
     if (highlightColor === "none" && product && product.variations) {
@@ -60,12 +60,12 @@ const ProductScreen = () => {
           variation.color === "none" &&
           variation.sizes.some((size) => size.size === "One Size Fits All")
       );
-  
+
       if (noneColorVariation) {
         const countInStock = noneColorVariation.sizes.find(
           (size) => size.size === "One Size Fits All"
         ).countInStock;
-  
+
         dispatch(
           setQtyForSizeColor({
             color: "none",
@@ -88,7 +88,6 @@ const ProductScreen = () => {
       }
     }
   }, [highlightColor, product, dispatch]);
-  
 
   const getSizes = (object) => {
     const sizes = [];
@@ -102,25 +101,16 @@ const ProductScreen = () => {
 
   const sizes = getSizes(availableSizesForColor);
 
-  const handleColorChange = (color, selectedSize, availableSizesForColor) => {
+  
+  const handleColorChange = (color, selectedSize) => {
     dispatch(setSelectedColor(color));
     dispatch(setSelectedColorImgPath(color));
-
-    // Get the new quantity based on the selected size and color
-    const newQuantityObj = availableSizesForColor.sizes.find(
-      (sizeObj) => sizeObj.size === selectedSize
-    );
-    const newQuantity = newQuantityObj ? newQuantityObj.countInStock : 0;
-
-    // Update qtyForSizeColor with the new quantity
-    dispatch(
-      setQtyForSizeColor({
-        color,
-        size: selectedSize,
-        qty: newQuantity,
-      })
-    );
+    dispatch(setSelectedSize(selectedSize))
   };
+
+  const qty = useSelector(selectQtyForSizeColor);
+ 
+  const maxQty = qty ? qty.qty : 1;
 
   const qtyForSizeColor = useSelector(selectQtyForSizeColor);
 
@@ -130,7 +120,7 @@ const ProductScreen = () => {
         product,
         size: selectedSize,
         color: highlightColor,
-        quantity: maxQty,
+        quantity: selectedQuantity,
         imgPath: colorImgPath,
         countInStock: qtyForSizeColor.qty,
       })

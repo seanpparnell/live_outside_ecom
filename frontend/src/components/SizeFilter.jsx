@@ -23,6 +23,7 @@ const SizeFilter = ({ sizes }) => {
     dispatch(
       setQtyForSizeColor({ color: selectedColor, size, qty: selectedSizeQty })
     );
+    console.log(`handleSizeClick:: color:${selectedColor}, size:${selectedSize} ,qty:${selectedSizeQty}`)
   };
 
   return (

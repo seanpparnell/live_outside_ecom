@@ -21,14 +21,13 @@ const CartScreen = () => {
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
-  console.log(cartItems);
 
   const removeFromCartHandler = async (id) => {
     dispatch(removeFromCart(id));
   };
 
-  const handleQuantityChange = (itemId, newQty) => {
-    dispatch(updateCartItemQuantity({ itemId, newQty }));
+  const handleQuantityChange = (compositeKey, newQty) => {
+    dispatch(updateCartItemQuantity({ compositeKey, newQty }));
   };
 
   const checkoutCartHandler = () => {
@@ -68,20 +67,22 @@ const CartScreen = () => {
                         <Link to={`/products/${item._id}`}>{item.name}</Link>
                       </Col>
                       <Col>${item.itemPrice}</Col>
+                      <Col>color: {item.color}</Col>
+                      <Col>size: {item.size}</Col>
                       <Col>
                         <QuantitySelector
-                          qty={item.qty}
-                          setQty={(newQty) =>
-                            handleQuantityChange(item._id, newQty)
-                          }
+                          initialQty={item.qty}
                           maxQty={item.countInStock}
+                          setQty={(newQty) =>
+                            handleQuantityChange(item.compositeKey, newQty)
+                          }
                         />
                       </Col>
                       <Col>
                         <Button
                           type="button"
                           variant="light"
-                          onClick={() => removeFromCartHandler(item._id)}
+                          onClick={() => removeFromCartHandler(item.compositeKey)}
                         >
                           <FaTrash />
                         </Button>
