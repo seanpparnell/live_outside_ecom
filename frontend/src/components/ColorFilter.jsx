@@ -16,21 +16,31 @@ const ColorFilter = ({ selectedColor, onColorClick }) => {
   const dispatch = useDispatch();
 
   return (
-    <ButtonGroup className="mb-3">
+    <div style={{display: 'flex', justifyContent: 'center'}}>
       {availableColors.map((colorObj) => (
-        <Button
+        <div
+          
           key={colorObj.color}
-          variant={colorObj.color === selectedColor ? "primary" : "secondary"}
           onClick={() => {
             onColorClick(colorObj.color);
             dispatch(setSelectedColor(colorObj.color));
             dispatch(setSelectedColorImgPath(colorObj.path))
           }}
         >
-          {colorObj.color}
-        </Button>
+          <span
+            style={{
+              display: "inline-block",
+              width: "20px",
+              height: "20px",
+              borderRadius: "50%",
+              backgroundColor: colorObj.color,
+              marginRight: "5px",
+              border: selectedColor === colorObj.color ? "2px solid blue" : "none",
+            }}
+          ></span>
+        </div>
       ))}
-    </ButtonGroup>
+    </div>
   );
 };
 
