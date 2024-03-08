@@ -38,25 +38,30 @@ const Product = ({ product, index, triggerRender }) => {
     const selectedColor = availableColorsRedux.find(
       (colorObj) => colorObj.color === color
     );
-    return selectedColor ? selectedColor.path : "";
+    return selectedColor ? selectedColor.path[0] : "";
   };
 
   const saveImgPath = (event) => {
-    const selectedSize = selectedColorLocal === "none" ? "One Size Fits All" : ""; // Set size to "One Size Fits All" if color is "none"
-    dispatch(setSelectedColorImgPath(getImagePath(selectedColorLocal)));
-    dispatch(setSelectedColor(selectedColorLocal));
-    dispatch(setSelectedSize(selectedSize)); // Dispatch selected size
-  };
+  const selectedSize = selectedColorLocal === "none" ? "One Size Fits All" : ""; // Set size to "One Size Fits All" if color is "none"
+  const selectedColorPath = availableColorsRedux.find(colorObj => colorObj.color === selectedColorLocal)?.path || [];
+  dispatch(setSelectedColorImgPath(selectedColorPath));
+  dispatch(setSelectedColor(selectedColorLocal));
+  dispatch(setSelectedSize(selectedSize));
+};
+
 
 
   return (
-    <Card className="my-3 p-3 rounded product">
-      <Link to={`/products/${_id}/${selectedColorLocal}`} onClick={saveImgPath}>
-        <Card.Img
-          src={getImagePath(selectedColorLocal)}
-          alt={name}
-          variant="top"
-        />
+    <Card className="my-3 p-3 rounded product" style={{ maxWidth: '215px', maxHeight: '400px', minHeight: '400px'}}>
+      <Link to={`/products/${_id}`} onClick={saveImgPath} style={{display: 'flex', justifyContent: 'center', alignContent: 'center', alignItems: 'center',}}>
+        <div style={{height: '200px', width: '100px', display: 'flex', justifyContent: 'center', alignContent: 'center', alignItems: 'center'}}>
+          <Card.Img
+            style={{ width: '100%', height: 'auto'}}
+            src={getImagePath(selectedColorLocal)}
+            alt={name}
+            variant="top"
+          />
+        </div>
       </Link>
       {variations && variations[0].name !== "none" && (
         <ColorFilter

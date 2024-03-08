@@ -46,6 +46,24 @@ const getCategories = asyncHandler(async (req, res) => {
   }
 });
 
+const getCategoryById = asyncHandler(async (req, res) => {
+  try {
+    const parentCategoryId = req.params.id;
+    const subCategories = await Category.find({ parentCategory: parentCategoryId });
+
+    if (!subCategories || subCategories.length === 0) {
+      res.status(404).json({ message: "Subcategories Not Found" });
+      return;
+    }
+
+    res.json(subCategories);
+  } catch (error) {
+    console.error("Error in getCategoryById:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+
 const getProductsInCategory = asyncHandler(async (req, res) => {
   try {
     const categoryId = req.params.id;
@@ -64,4 +82,4 @@ const getProductsInCategory = asyncHandler(async (req, res) => {
   }
 });
 
-export { getCategories, getProductsInCategory };
+export { getCategories, getCategoryById, getProductsInCategory };

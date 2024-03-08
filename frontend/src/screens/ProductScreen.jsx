@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import {
   Row,
   Col,
@@ -16,6 +16,7 @@ import Message from "../components/Message";
 import ColorFilter from "../components/ColorFilter";
 import SizeFilter from "../components/SizeFilter";
 import QuantitySelector from "../components/QuantitySelector";
+import ProductCarousel from "../components/ProductCarousel";
 import { useGetProductDetailsQuery } from "../slices/productsApiSlice";
 import { addToCart, selectCartItem } from "../slices/cartSlice";
 import "./ProductScreen.css";
@@ -35,8 +36,9 @@ import {
 
 const ProductScreen = () => {
   
-  const { id: productId } = useParams();
+  const { id: productId} = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {
     data: product,
@@ -89,6 +91,7 @@ const ProductScreen = () => {
     }
   }, [highlightColor, product, dispatch]);
 
+
   const getSizes = (object) => {
     const sizes = [];
     if (object && object.sizes) {
@@ -104,8 +107,8 @@ const ProductScreen = () => {
   
   const handleColorChange = (color, selectedSize) => {
     dispatch(setSelectedColor(color));
-    dispatch(setSelectedColorImgPath(color));
     dispatch(setSelectedSize(selectedSize))
+    
   };
 
   const qty = useSelector(selectQtyForSizeColor);
@@ -121,7 +124,7 @@ const ProductScreen = () => {
         size: selectedSize,
         color: highlightColor,
         quantity: selectedQuantity,
-        imgPath: colorImgPath,
+        imgPath: colorImgPath[0],
         countInStock: qtyForSizeColor.qty,
       })
     );
@@ -141,7 +144,7 @@ const ProductScreen = () => {
       ) : (
         <Row>
           <Col md={5}>
-            <Image src={colorImgPath} alt={product.name} fluid />
+          <ProductCarousel images={colorImgPath} />
             {product.variations && product.variations[0].color !== "none" && (
               <ColorFilter
                 selectedColor={highlightColor}

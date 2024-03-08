@@ -58,7 +58,10 @@ const ProductList = ({ categoryId }) => {
   const createVariantProduct = (product, image) => {
     const variantProduct = { ...product };
     variantProduct.defaultColor = image.color;
-    variantProduct.images = [image];
+    variantProduct.images = [{
+      color: image.color,
+      path: image.path[0] // Selecting the first image path for the color
+    }];
     return variantProduct;
   };
 

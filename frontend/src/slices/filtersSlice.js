@@ -6,7 +6,7 @@ const filtersSlice = createSlice({
   initialState: {
     availableColors: [],
     selectedColor: "",
-    selectedColorImgPath: "",
+    selectedColorImgPath: [],
     availableSizesQtyForColor: [], 
     selectedSize: "",
     qtyForSizeColor: {},
@@ -39,7 +39,6 @@ const filtersSlice = createSlice({
         size: selectedSize,
         qty,
       };
-      console.log('setSelectedColor qty:', qty)
     },
     setSelectedColorImgPath: (state, action) => {
       state.selectedColorImgPath = action.payload;

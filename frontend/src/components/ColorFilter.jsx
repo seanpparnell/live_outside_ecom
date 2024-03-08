@@ -16,7 +16,7 @@ const ColorFilter = ({ selectedColor, onColorClick }) => {
   const dispatch = useDispatch();
 
   return (
-    <div style={{display: 'flex', justifyContent: 'center'}}>
+    <div style={{display: 'flex', justifyContent: 'center', marginTop: '4px'}}>
       {availableColors.map((colorObj) => (
         <div
           
@@ -27,17 +27,34 @@ const ColorFilter = ({ selectedColor, onColorClick }) => {
             dispatch(setSelectedColorImgPath(colorObj.path))
           }}
         >
-          <span
-            style={{
-              display: "inline-block",
-              width: "20px",
-              height: "20px",
-              borderRadius: "50%",
-              backgroundColor: colorObj.color,
-              marginRight: "5px",
-              border: selectedColor === colorObj.color ? "2px solid blue" : "none",
-            }}
-          ></span>
+          
+            <span
+              style={{
+                display: "inline-block",
+                justifyContent: 'center',
+                alignContent: 'center',
+                alignItems: 'center',
+                width: "20px",
+                height: "20px",
+                borderRadius: "50%",
+                backgroundColor: colorObj.color,
+                margin: '0px 3px 0px 3px',
+                border: '.5px dotted black'
+               
+              }}
+            >
+              <span style={{
+                display: "inline-block",
+                width: "28px",
+                height: "28px",
+                borderRadius: "50%",
+                backgroundColor: 'transparent',
+                marginTop: '-5px',
+                marginLeft: '-5px',
+                border: selectedColor === colorObj.color ? "2px solid blue" : "none",
+              }}></span>
+            </span>
+         
         </div>
       ))}
     </div>
