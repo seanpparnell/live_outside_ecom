@@ -137,7 +137,7 @@ const products = [
         ],
       },
       {
-        color: "light-yellow",
+        color: "lightYellow",
         path: [
           "/images/womens/shirts/northFace_tshirt_1/light_yellow_1.jpg",
           "/images/womens/shirts/northFace_tshirt_1/light_yellow_2.jpg",
@@ -170,7 +170,7 @@ const products = [
         ],
       },
       {
-        color: "light-yellow",
+        color: "lightYellow",
         sizes: [
           { size: "small", countInStock: 7 },
           { size: "medium", countInStock: 8 },
