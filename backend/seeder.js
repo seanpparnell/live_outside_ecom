@@ -47,8 +47,7 @@ const importData = async () => {
       const { category, subCategory, ...rest } = product;
 
       const categoryId = categoryMap[product.category];
-      // console.log(`product.category: ${product.category}`);
-      // console.log(`categoryId: ${categoryId}`);
+   
 
       const subCategoryObj = subCategories.find(
         (sub) => sub.name === subCategory

@@ -1,4 +1,6 @@
 const products = [
+
+  // MEN //
   {
     name: "North Face Classic Tee - Mens",
     description: "This is a really awesome tshirt! Buy it!",
@@ -54,7 +56,6 @@ const products = [
           "/images/mens/shirts/northFace_tshirt"
         ],
       },
-     
     ],
     variations: [
       {
@@ -107,6 +108,87 @@ const products = [
       },
     ],
   },
+
+  // WOMEN //
+  {
+    name: "North Face Classic Tee - Womens",
+    description: "This is a really awesome tshirt! Buy it!",
+    brand: "North Face",
+    category: "Women",
+    subCategory: "shirtsWomens",
+    price: 29.99,
+    rating: 4,
+    numReviews: 12,
+    defaultColor: "black",
+    images: [
+      {
+        color: "black",
+        path: [
+          "/images/womens/shirts/northFace_tshirt_1/black_1.jpg",
+          "/images/womens/shirts/northFace_tshirt_1/black_2.jpg",
+        ],
+      },
+      {
+        color: "lavender",
+        path: [
+          "/images/womens/shirts/northFace_tshirt_1/lavender_1.jpg",
+          "/images/womens/shirts/northFace_tshirt_1/lavender_2.jpg",
+          "/images/womens/shirts/northFace_tshirt_1/lavender_3.jpg"
+        ],
+      },
+      {
+        color: "light-yellow",
+        path: [
+          "/images/womens/shirts/northFace_tshirt_1/light_yellow_1.jpg",
+          "/images/womens/shirts/northFace_tshirt_1/light_yellow_2.jpg",
+        ],
+      },
+      {
+        color: "lime",
+        path: [
+          "/images/womens/shirts/northFace_tshirt_1/lime_1.jpg",
+          "/images/womens/shirts/northFace_tshirt_1/lime_2.jpg",
+          "/images/womens/shirts/northFace_tshirt_1/lime_3.jpg"
+        ],
+      },
+    ],
+    variations: [
+      {
+        color: "black",
+        sizes: [
+          { size: "small", countInStock: 1 },
+          { size: "medium", countInStock: 2 },
+          { size: "large", countInStock: 3 },
+        ],
+      },
+      {
+        color: "lavender",
+        sizes: [
+          { size: "small", countInStock: 4 },
+          { size: "medium", countInStock: 5 },
+          { size: "large", countInStock: 6 },
+        ],
+      },
+      {
+        color: "light-yellow",
+        sizes: [
+          { size: "small", countInStock: 7 },
+          { size: "medium", countInStock: 8 },
+          { size: "large", countInStock: 9 },
+        ],
+      },
+      {
+        color: "lime",
+        sizes: [
+          { size: "small", countInStock: 10 },
+          { size: "medium", countInStock: 11 },
+          { size: "large", countInStock: 12 },
+        ],
+      },
+    ],
+  },
+
+  // CYLCE //
   {
     name: "Specialized Road Bike",
     description:
@@ -166,6 +248,8 @@ const products = [
       },
     ],
   },
+
+  // CAMP & HIKE //
   {
     name: "2 Person Dome Tent",
     description:
@@ -226,6 +310,13 @@ const products = [
       },
     ],
   },
+
+  // WATER //
+
+  // MEN FOOTWEAR //
+
+  // WOMENS FOOTWEAR //
+
 ];
 
 export default products;
