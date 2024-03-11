@@ -4,9 +4,12 @@ import { apiSlice } from "./apiSlice";
 export const CategoriesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCategories: builder.query({
-      query: () => ({
-        url: CATEGORIES_URL,
-      }),
+      query: () => {
+        console.log("Fetching categories..."); // Log that categories are being fetched
+        return {
+          url: CATEGORIES_URL,
+        };
+      },
       keepUnusedDataFor: 5,
     }),
     getProductsInCategory: builder.query({
