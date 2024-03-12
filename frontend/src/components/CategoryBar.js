@@ -7,7 +7,9 @@ import { addCategoryId } from "../slices/categorySlice";
 
 const CategoryBar = () => {
   const { data: categories, isLoading, error } = useGetCategoriesQuery();
-
+  console.log('categories', categories)
+  console.log('loading', isLoading)
+  console.log('error', error)
   const dispatch = useDispatch();
   
   const handleCategoryClick = (category) => {
