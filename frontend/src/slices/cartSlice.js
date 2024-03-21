@@ -38,13 +38,6 @@ const cartSlice = createSlice({
       return updateCart(state);
     },
 
-    // removeFromCart: (state, action) => {
-    //   const { itemId, color, size }= action.payload
-    //   state.cartItems = state.cartItems.filter((item) =>
-    //    item._id !== itemId || item.size !== item.size || item.color !== item.color, action.payload);
-    //   return updateCart(state);
-    // },
-
     removeFromCart: (state, action) => {
       const itemId = action.payload;
       state.cartItems = state.cartItems.filter((item) => item.compositeKey !== action.payload);
