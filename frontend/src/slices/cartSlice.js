@@ -4,7 +4,7 @@ import { setQtyForSizeColor } from "./filtersSlice";
 
 const initialState = localStorage.getItem("cart")
   ? JSON.parse(localStorage.getItem("cart"))
-  : { cartItems: [] };
+  : { cartItems: [], shippingAdress: {}, paymentMethod: 'PayPal' };
 
 
 
@@ -54,9 +54,13 @@ const cartSlice = createSlice({
 
       return updateCart(state);
     },
+    saveShippingAddress: (state, action) => {
+      state.shippingAdress = action.payload;
+      return updateCart(state)
+    }
   }
 });
 
-export const { addToCart, removeFromCart, updateCartItemQuantity } = cartSlice.actions;
+export const { addToCart, removeFromCart, updateCartItemQuantity, saveShippingAddress } = cartSlice.actions;
 
 export default cartSlice.reducer;
