@@ -7,11 +7,7 @@ import './QuantitySelector.css';
 const QuantitySelector = ({ maxQty, initialQty, setQty }) => {
   const dispatch = useDispatch();
   const selectedQuantity = useSelector(selectSelectedQuantity);
-
-
-  console.log('selectedQty',selectedQuantity);
   
-
   const [selectedQty, setSelectedQty] = useState(initialQty);
 
   useEffect(() => {

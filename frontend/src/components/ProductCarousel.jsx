@@ -3,7 +3,7 @@ import { Carousel, Image } from "react-bootstrap";
 import "./ProductCarousel.css";
 
 const ProductCarousel = ({ images }) => {
-  console.log(images);
+  // console.log(images);
   return (
     <Carousel
       pause="hover"
