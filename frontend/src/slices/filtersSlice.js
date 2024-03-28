@@ -59,7 +59,6 @@ const filtersSlice = createSlice({
           size: selectedSize,
           qty,
         };
-        console.log('setSelectedSize qty:', qty)
       }
     },
     setQtyForSizeColor: (state, action) => {

@@ -5,7 +5,7 @@ export const CategoriesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCategories: builder.query({
       query: () => {
-        console.log("Fetching categories..."); // Log that categories are being fetched
+        // console.log("Fetching categories..."); 
         return {
           url: CATEGORIES_URL,
         };

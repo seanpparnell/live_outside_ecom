@@ -1,10 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { updateCart } from "../utils/cartUtils";
-import { setQtyForSizeColor } from "./filtersSlice";
 
 const initialState = localStorage.getItem("cart")
   ? JSON.parse(localStorage.getItem("cart"))
-  : { cartItems: [], shippingAdress: {}, paymentMethod: 'PayPal' };
+  : { cartItems: [], shippingAddress: {}, paymentMethod: 'PayPal' };
 
 
 
@@ -55,7 +54,7 @@ const cartSlice = createSlice({
       return updateCart(state);
     },
     saveShippingAddress: (state, action) => {
-      state.shippingAdress = action.payload;
+      state.shippingAddress = action.payload;
       return updateCart(state)
     }
   }

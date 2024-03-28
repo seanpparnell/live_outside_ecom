@@ -22,7 +22,7 @@ const LoginScreen = () => {
 
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
-  const redirect = sp.get('direct') || '/';
+  const redirect = sp.get('redirect') || '/';
 
   useEffect(() => {
     if (userInfo) {
@@ -72,7 +72,10 @@ const LoginScreen = () => {
       </Form>
       <Row>
         <Col>
-          New Customer ? <Link to={ redirect ? `/register?redirect=${redirect}` : '/register'}>Register</Link>
+          New Customer?{' '}
+          <Link to={ redirect ? `/register?redirect=${redirect}` : '/register'}>
+            Register
+          </Link>
         </Col>
       </Row>
     </FormContainer>
