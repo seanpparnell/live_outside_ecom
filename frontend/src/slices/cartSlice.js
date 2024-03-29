@@ -1,10 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { updateCart } from "../utils/cartUtils";
-import { setQtyForSizeColor } from "./filtersSlice";
 
 const initialState = localStorage.getItem("cart")
   ? JSON.parse(localStorage.getItem("cart"))
-  : { cartItems: [] };
+  : { cartItems: [], shippingAddress: {}, paymentMethod: 'PayPal' };
 
 
 
@@ -38,13 +37,6 @@ const cartSlice = createSlice({
       return updateCart(state);
     },
 
-    // removeFromCart: (state, action) => {
-    //   const { itemId, color, size }= action.payload
-    //   state.cartItems = state.cartItems.filter((item) =>
-    //    item._id !== itemId || item.size !== item.size || item.color !== item.color, action.payload);
-    //   return updateCart(state);
-    // },
-
     removeFromCart: (state, action) => {
       const itemId = action.payload;
       state.cartItems = state.cartItems.filter((item) => item.compositeKey !== action.payload);
@@ -61,9 +53,17 @@ const cartSlice = createSlice({
 
       return updateCart(state);
     },
+    saveShippingAddress: (state, action) => {
+      state.shippingAddress = action.payload;
+      return updateCart(state)
+    },
+    savePaymentMethod: (state, action) => {
+      state.paymentMethod = action.payload;
+      return updateCart(state);
+    }
   }
 });
 
-export const { addToCart, removeFromCart, updateCartItemQuantity } = cartSlice.actions;
+export const { addToCart, removeFromCart, updateCartItemQuantity, saveShippingAddress, savePaymentMethod } = cartSlice.actions;
 
 export default cartSlice.reducer;

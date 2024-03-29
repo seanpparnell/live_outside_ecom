@@ -8,15 +8,15 @@ import authSliceReducer from "./slices/authSlice";
 import cartSliceReducer from "./slices/cartSlice";
 import filtersSliceReducer from "./slices/filtersSlice";
 
-const authPersistConfig = {
-  key: "auth",
-  storage: storage,
-};
+// const authPersistConfig = {
+//   key: "auth",
+//   storage: storage,
+// };
 
-const cartPersistConfig = {
-  key: "cart",
-  storage: storage,
-};
+// const cartPersistConfig = {
+//   key: "cart",
+//   storage: storage,
+// };
 
 const persistedReducer = persistReducer(
   {

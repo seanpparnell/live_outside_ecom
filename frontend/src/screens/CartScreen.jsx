@@ -31,13 +31,11 @@ const CartScreen = () => {
   };
 
   const checkoutCartHandler = () => {
-    navigate("/login?redirect=/shipping");
+    navigate('/login?redirect=/shipping');
   };
 
-  
-
   const subtotal = cartItems.reduce((acc, item) => acc + item.qty * item.itemPrice, 0)
-  console.log('subtotal', subtotal)
+
 
   return (
     <div>

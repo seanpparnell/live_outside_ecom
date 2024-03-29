@@ -40,7 +40,6 @@ const ColorFilter = ({ selectedColor, onColorClick }) => {
                 backgroundColor: colorObj.color,
                 margin: '0px 3px 0px 3px',
                 border: '.5px dotted black'
-               
               }}
             >
               <span style={{
@@ -49,7 +48,7 @@ const ColorFilter = ({ selectedColor, onColorClick }) => {
                 height: "28px",
                 borderRadius: "50%",
                 backgroundColor: 'transparent',
-                marginTop: '-5px',
+                marginTop: '5px',
                 marginLeft: '-5px',
                 border: selectedColor === colorObj.color ? "2px solid blue" : "none",
               }}></span>
