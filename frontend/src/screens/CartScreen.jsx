@@ -4,6 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart, updateCartItemQuantity } from "../slices/cartSlice";
 import QuantitySelector from "../components/QuantitySelector";
 import {
+  setSelectedColor,
+  setAvailableSizesQtyForColor,
+  setSelectedColorImgPath,
+  setAvailableColors,
+} from "../slices/filtersSlice";
+import {
   Container,
   Row,
   Col,
@@ -21,6 +27,7 @@ const CartScreen = () => {
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
+  console.log("cart items:", cartItems);
 
   const removeFromCartHandler = async (id) => {
     dispatch(removeFromCart(id));
@@ -31,11 +38,20 @@ const CartScreen = () => {
   };
 
   const checkoutCartHandler = () => {
-    navigate('/login?redirect=/shipping');
+    navigate("/login?redirect=/shipping");
   };
 
-  const subtotal = cartItems.reduce((acc, item) => acc + item.qty * item.itemPrice, 0)
-
+  const updateProductState = (item) => {
+    // Extract colors from the clicked item
+    const colors = item.images.map((image) => ({
+      color: image.color,
+      path: image.path,
+    }));
+    // Dispatch action to update available colors in Redux state
+    dispatch(setAvailableColors(colors));
+    // Set selected color to the first color available
+    dispatch(setSelectedColor(colors[0].color));
+  };
 
   return (
     <div>
@@ -57,12 +73,17 @@ const CartScreen = () => {
                             width: "200px",
                             objectFit: "contain",
                           }}
-                          src={item.imgPath}
+                          src={item.imgPath[0]}
                           alt={item.name}
                           fluid
                           rounded
                         />
-                        <Link to={`/products/${item._id}`}>{item.name}</Link>
+                        <Link
+                          to={`/products/${item._id}`}
+                          onClick={() => updateProductState(item)}
+                        >
+                          {item.name}
+                        </Link>
                       </Col>
                       <Col>${item.itemPrice}</Col>
                       <Col>color: {item.color}</Col>
@@ -80,7 +101,9 @@ const CartScreen = () => {
                         <Button
                           type="button"
                           variant="light"
-                          onClick={() => removeFromCartHandler(item.compositeKey)}
+                          onClick={() =>
+                            removeFromCartHandler(item.compositeKey)
+                          }
                         >
                           <FaTrash />
                         </Button>
