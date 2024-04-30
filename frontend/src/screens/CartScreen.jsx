@@ -42,15 +42,8 @@ const CartScreen = () => {
   };
 
   const updateProductState = (item) => {
-    // Extract colors from the clicked item
-    const colors = item.images.map((image) => ({
-      color: image.color,
-      path: image.path,
-    }));
-    // Dispatch action to update available colors in Redux state
-    dispatch(setAvailableColors(colors));
-    // Set selected color to the first color available
-    dispatch(setSelectedColor(colors[0].color));
+    dispatch(setSelectedColor(item.color))
+    dispatch(setSelectedColorImgPath(item.imgPath))
   };
 
   return (
