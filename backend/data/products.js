@@ -298,7 +298,7 @@ const products = [
     rating: 4.5,
     numReviews: 12,
     defaultColor: "none",
-    images: [{ color: "none", path: "/images/bike.jpg" }],
+    images: [{ color: "none", path: ["/images/bike.jpg"] }],
     variations: [
       {
         color: "none", // Represents "No Color" for tents
@@ -318,7 +318,7 @@ const products = [
     rating: 4.0,
     numReviews: 8,
     defaultColor: "none",
-    images: [{ color: "none", path: "/images/bike.jpg" }],
+    images: [{ color: "none", path: ["/images/bike.jpg"] }],
     variations: [
       {
         color: "none", // Represents "No Color" for tents
@@ -338,7 +338,7 @@ const products = [
     rating: 3,
     numReviews: 12,
     defaultColor: "none",
-    images: [{ color: "none", path: "/images/bike.jpg" }],
+    images: [{ color: "none", path: ["/images/bike.jpg"] }],
     variations: [
       {
         color: "none", // Represents "No Color" for tents
@@ -360,7 +360,7 @@ const products = [
     rating: 5,
     numReviews: 12,
     defaultColor: "none",
-    images: [{ color: "none", path: "/images/tent.jpg" }],
+    images: [{ color: "none", path: ["/images/tent.jpg"] }],
     variations: [
       {
         color: "none", // Represents "No Color" for tents
@@ -380,7 +380,7 @@ const products = [
     rating: 3.5,
     numReviews: 10,
     defaultColor: "none",
-    images: [{ color: "none", path: "/images/tent.jpg" }],
+    images: [{ color: "none", path: ["/images/tent.jpg"] }],
     variations: [
       {
         color: "none", // Represents "No Color" for tents
@@ -400,7 +400,7 @@ const products = [
     rating: 4,
     numReviews: 12,
     defaultColor: "none",
-    images: [{ color: "none", path: "/images/tent.jpg" }],
+    images: [{ color: "none", path: ["/images/tent.jpg"] }],
     variations: [
       {
         color: "none", // Represents "No Color" for tents

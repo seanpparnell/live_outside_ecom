@@ -28,14 +28,14 @@ const ProductList = ({ categoryId }) => {
   
 
   const createVariantProduct = (product, image) => {
-    
+    console.log('image.path:' , image.path)
     const variantProduct = { ...product };
     variantProduct.defaultColor = image.color;
     variantProduct.defaultImages = image.path
     console.log(' variant products:', variantProduct)
     return variantProduct
   };
-
+  
 
   return (
     <Container>
@@ -44,7 +44,7 @@ const ProductList = ({ categoryId }) => {
       {!isLoading && !error && (
         <Row>
           {products.map((product) => {
-            if (product.images && product.images.length > 1) {
+            if (product.images && product.images.length > 0) {
               return product.images.map((image, index) => (
                 <Col
                   key={`${product._id}-${index}`}

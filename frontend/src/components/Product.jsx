@@ -16,7 +16,9 @@ import { get } from "mongoose";
 
 const Product = ({ product, index}) => {
   const [selectedColorLocal, setSelectedColorLocal] = useState("");
-  const [selectedImgPathLocal, setSelectedImgPathLocal] = useState([])
+  const [selectedImgPathLocal, setSelectedImgPathLocal] = useState([]);
+  console.log('selected color local:', selectedColorLocal);
+
   
   const dispatch = useDispatch();
   
@@ -24,10 +26,8 @@ const Product = ({ product, index}) => {
 
   useEffect(() => {
     if (!selectedColorLocal && product.defaultColor) {
-      setSelectedColorLocal(product.defaultColor);
-      dispatch(setSelectedColor(product.defaultColor));
+      // setSelectedColorLocal(product.defaultColor);
       setSelectedImgPathLocal(product.defaultImages);
-      dispatch(setSelectedColorImgPath(product.defaultImages)); // Optionally set Redux state here as well
     }
   }, [selectedColorLocal, product.defaultColor]);
   
@@ -41,12 +41,17 @@ const Product = ({ product, index}) => {
     console.log('path:', x.path)
   };
 
-  const saveImgPath = (e) => {}
+  const handleProductClick = () => {
+    if (!selectedColorLocal && product.defaultColor) {
+      dispatch(setSelectedColorImgPath(product.defaultImages));
+      dispatch(setSelectedColor(product.defaultColor));
+    }
+  };
   
 
   return (
     <Card className="my-3 p-3 rounded product" style={{ maxWidth: '215px', maxHeight: '400px', minHeight: '400px'}}>
-      <Link to={`/products/${_id}`}  style={{display: 'flex', justifyContent: 'center', alignContent: 'center', alignItems: 'center',}}>
+      <Link to={`/products/${_id}`} onClick={() => handleProductClick(product)} style={{display: 'flex', justifyContent: 'center', alignContent: 'center', alignItems: 'center',}}>
         <div style={{height: '200px', width: '100px', display: 'flex', justifyContent: 'center', alignContent: 'center', alignItems: 'center'}}>
           <Card.Img
             style={{ width: '100%', height: 'auto'}}
@@ -61,6 +66,7 @@ const Product = ({ product, index}) => {
           availableColors={images}
           selectedColor={selectedColorLocal}
           onColorClick={handleColorChange}
+          defaultColor={product.defaultColor}
         />
       )}
       <Card.Body>

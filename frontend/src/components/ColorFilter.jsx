@@ -9,7 +9,7 @@ import {
   selectSelectedColor
 } from "../slices/filtersSlice";
 
-const ColorFilter = ({ selectedColor, onColorClick, availableColors }) => {
+const ColorFilter = ({ selectedColor, onColorClick, availableColors, defaultColor }) => {
   
   // availableColors.map((x) => {
   //   console.log(`color: ${x.color}, path: ${x.path}`)
@@ -48,10 +48,9 @@ const ColorFilter = ({ selectedColor, onColorClick, availableColors }) => {
                 backgroundColor: 'transparent',
                 marginTop: '5px',
                 marginLeft: '-5px',
-                border: selectedColor === x.color ? "2px solid blue" : "none",
+                border: selectedColor === x.color || (!selectedColor && defaultColor === x.color) ? "2px solid blue" : "none",
               }}></span>
             </span>
-         
         </div>
       ))}
     </div>
