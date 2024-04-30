@@ -17,7 +17,6 @@ import { get } from "mongoose";
 const Product = ({ product, index}) => {
   const [selectedColorLocal, setSelectedColorLocal] = useState("");
   const [selectedImgPathLocal, setSelectedImgPathLocal] = useState([]);
-  console.log('selected color local:', selectedColorLocal);
 
   
   const dispatch = useDispatch();
@@ -37,8 +36,6 @@ const Product = ({ product, index}) => {
     setSelectedImgPathLocal(x.path);
     dispatch(setSelectedColorImgPath(x.path));
     dispatch(setSelectedColor(x.color));
-    console.log('color:', x.color)
-    console.log('path:', x.path)
   };
 
   const handleProductClick = () => {
