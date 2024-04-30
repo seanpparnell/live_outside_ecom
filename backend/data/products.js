@@ -108,6 +108,104 @@ const products = [
       },
     ],
   },
+  {
+    name: "Columbia Thistletown Park Crew Mens",
+    description: "this columbia tshirt is the suppperest bestest tshirt in the universe",
+    brand: "Columbia",
+    category: "Men",
+    subCategory: "Shirts Men",
+    price: 29.99,
+    rating: 4,
+    numReviews: 12,
+    defaultColor: "black",
+    images: [
+      {
+        color: "black",
+        path: [
+          "/images/mens/shirts/columbia_tshirt_1/black_1.jpg",
+          "/images/mens/shirts/columbia_tshirt_1/black_2.jpg",
+          "/images/mens/shirts/columbia_tshirt_1/black_3.jpg",
+        ],
+      },
+      {
+        color: "red",
+        path: [
+          "/images/mens/shirts/columbia_tshirt_1/red_1.jpg",
+          "/images/mens/shirts/columbia_tshirt_1/red_2.jpg",
+          "/images/mens/shirts/columbia_tshirt_1/red_3.jpg",
+          "/images/mens/shirts/columbia_tshirt_1/red_4.jpg",
+        ],
+      },
+      {
+        color: "darkGreen",
+        path: [
+          "/images/mens/shirts/columbia_tshirt_1/dark_green_1.jpg",
+          "/images/mens/shirts/columbia_tshirt_1/dark_green_2.jpg",
+          "/images/mens/shirts/columbia_tshirt_1/dark_green_3.jpg",
+        ],
+      },
+      {
+        color: "lightBlue",
+        path: [
+          "/images/mens/shirts/columbia_tshirt_1/light_blue_1.jpg",
+          "/images/mens/shirts/columbia_tshirt_1/light_blue_2.jpg",
+          "/images/mens/shirts/columbia_tshirt_1/light_blue_3.jpg",
+          "/images/mens/shirts/columbia_tshirt_1/light_blue_4.jpg",
+        ],
+      },
+      {
+        color: "lightGreen",
+        path: [
+          "/images/mens/shirts/columbia_tshirt_1/light_green_1.jpg",
+          "/images/mens/shirts/columbia_tshirt_1/light_green_2.jpg",
+          "/images/mens/shirts/columbia_tshirt_1/light_green_3.jpg",
+          "/images/mens/shirts/columbia_tshirt_1/light_green_4.jpg",
+        ],
+      },
+    ],
+    variations: [
+      {
+        color: "black",
+        sizes: [
+          { size: "small", countInStock: 1 },
+          { size: "medium", countInStock: 2 },
+          { size: "large", countInStock: 3 },
+        ],
+      },
+      {
+        color: "red",
+        sizes: [
+          { size: "small", countInStock: 4 },
+          { size: "medium", countInStock: 5 },
+          { size: "large", countInStock: 6 },
+        ],
+      },
+      {
+        color: "darkGreen",
+        sizes: [
+          { size: "small", countInStock: 7 },
+          { size: "medium", countInStock: 8 },
+          { size: "large", countInStock: 9 },
+        ],
+      },
+      {
+        color: "lightBlue",
+        sizes: [
+          { size: "small", countInStock: 10 },
+          { size: "medium", countInStock: 11 },
+          { size: "large", countInStock: 12 },
+        ],
+      },
+      {
+        color: "lightGreen",
+        sizes: [
+          { size: "small", countInStock: 13 },
+          { size: "medium", countInStock: 14 },
+          { size: "large", countInStock: 15 },
+        ],
+      },
+    ],
+  },
 
   // WOMEN //
   {
@@ -200,7 +298,7 @@ const products = [
     rating: 4.5,
     numReviews: 12,
     defaultColor: "none",
-    images: [{ color: "none", path: "/images/bike.jpg" }],
+    images: [{ color: "none", path: ["/images/bike.jpg"] }],
     variations: [
       {
         color: "none", // Represents "No Color" for tents
@@ -220,7 +318,7 @@ const products = [
     rating: 4.0,
     numReviews: 8,
     defaultColor: "none",
-    images: [{ color: "none", path: "/images/bike.jpg" }],
+    images: [{ color: "none", path: ["/images/bike.jpg"] }],
     variations: [
       {
         color: "none", // Represents "No Color" for tents
@@ -240,7 +338,7 @@ const products = [
     rating: 3,
     numReviews: 12,
     defaultColor: "none",
-    images: [{ color: "none", path: "/images/bike.jpg" }],
+    images: [{ color: "none", path: ["/images/bike.jpg"] }],
     variations: [
       {
         color: "none", // Represents "No Color" for tents
@@ -262,7 +360,7 @@ const products = [
     rating: 5,
     numReviews: 12,
     defaultColor: "none",
-    images: [{ color: "none", path: "/images/tent.jpg" }],
+    images: [{ color: "none", path: ["/images/tent.jpg"] }],
     variations: [
       {
         color: "none", // Represents "No Color" for tents
@@ -282,7 +380,7 @@ const products = [
     rating: 3.5,
     numReviews: 10,
     defaultColor: "none",
-    images: [{ color: "none", path: "/images/tent.jpg" }],
+    images: [{ color: "none", path: ["/images/tent.jpg"] }],
     variations: [
       {
         color: "none", // Represents "No Color" for tents
@@ -302,7 +400,7 @@ const products = [
     rating: 4,
     numReviews: 12,
     defaultColor: "none",
-    images: [{ color: "none", path: "/images/tent.jpg" }],
+    images: [{ color: "none", path: ["/images/tent.jpg"] }],
     variations: [
       {
         color: "none", // Represents "No Color" for tents

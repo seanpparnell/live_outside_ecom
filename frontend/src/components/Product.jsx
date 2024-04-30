@@ -1,7 +1,7 @@
 // Product.js
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useAsyncError } from "react-router-dom";
 import { Card } from "react-bootstrap";
 import Rating from "./Rating";
 import ColorFilter from "./ColorFilter";
@@ -14,50 +14,48 @@ import {
 import { FaAvianex } from "react-icons/fa";
 import { get } from "mongoose";
 
-const Product = ({ product, index, triggerRender }) => {
+const Product = ({ product, index}) => {
   const [selectedColorLocal, setSelectedColorLocal] = useState("");
+  const [selectedImgPathLocal, setSelectedImgPathLocal] = useState([]);
+  console.log('selected color local:', selectedColorLocal);
+
   
   const dispatch = useDispatch();
   
-  const availableColorsRedux = useSelector(selectAvailableColors);
-  const { _id, name, rating, numReviews, price, variations } = product;
-  
+  const { _id, name, rating, numReviews, price, variations, images } = product;
 
   useEffect(() => {
     if (!selectedColorLocal && product.defaultColor) {
-      setSelectedColorLocal(product.defaultColor);
+      // setSelectedColorLocal(product.defaultColor);
+      setSelectedImgPathLocal(product.defaultImages);
     }
-  }, [selectedColorLocal, product.defaultColor, triggerRender]);
+  }, [selectedColorLocal, product.defaultColor]);
+  
 
-  const handleColorChange = (color) => {
-    setSelectedColorLocal(color);
-    dispatch(setSelectedColor({ color, index }));
+ const handleColorChange = (x) => {
+    setSelectedColorLocal(x.color);
+    setSelectedImgPathLocal(x.path);
+    dispatch(setSelectedColorImgPath(x.path));
+    dispatch(setSelectedColor(x.color));
+    console.log('color:', x.color)
+    console.log('path:', x.path)
   };
 
-  const getImagePath = (color) => {
-    const selectedColor = availableColorsRedux.find(
-      (colorObj) => colorObj.color === color
-    );
-    return selectedColor ? selectedColor.path[0] : "";
+  const handleProductClick = () => {
+    if (!selectedColorLocal && product.defaultColor) {
+      dispatch(setSelectedColorImgPath(product.defaultImages));
+      dispatch(setSelectedColor(product.defaultColor));
+    }
   };
-
-  const saveImgPath = (event) => {
-  const selectedSize = selectedColorLocal === "none" ? "One Size Fits All" : ""; // Set size to "One Size Fits All" if color is "none"
-  const selectedColorPath = availableColorsRedux.find(colorObj => colorObj.color === selectedColorLocal)?.path || [];
-  dispatch(setSelectedColorImgPath(selectedColorPath));
-  dispatch(setSelectedColor(selectedColorLocal));
-  dispatch(setSelectedSize(selectedSize));
-};
-
-
+  
 
   return (
     <Card className="my-3 p-3 rounded product" style={{ maxWidth: '215px', maxHeight: '400px', minHeight: '400px'}}>
-      <Link to={`/products/${_id}`} onClick={saveImgPath} style={{display: 'flex', justifyContent: 'center', alignContent: 'center', alignItems: 'center',}}>
+      <Link to={`/products/${_id}`} onClick={() => handleProductClick(product)} style={{display: 'flex', justifyContent: 'center', alignContent: 'center', alignItems: 'center',}}>
         <div style={{height: '200px', width: '100px', display: 'flex', justifyContent: 'center', alignContent: 'center', alignItems: 'center'}}>
           <Card.Img
             style={{ width: '100%', height: 'auto'}}
-            src={getImagePath(selectedColorLocal)}
+            src={selectedImgPathLocal[0]}
             alt={name}
             variant="top"
           />
@@ -65,13 +63,14 @@ const Product = ({ product, index, triggerRender }) => {
       </Link>
       {variations && variations[0].name !== "none" && (
         <ColorFilter
-          availableColors={availableColorsRedux}
+          availableColors={images}
           selectedColor={selectedColorLocal}
           onColorClick={handleColorChange}
+          defaultColor={product.defaultColor}
         />
       )}
       <Card.Body>
-        <Link to={`/products/${_id}/${selectedColorLocal}`}>
+        <Link to={`/products/${_id}`}>
           <Card.Title className="product-title" as="div">
             <strong>{name}</strong>
           </Card.Title>

@@ -15,9 +15,9 @@ const App = () => {
     <>
         <NavBar />
         <main>
-          <div>
+          <Container>
             <Outlet/>
-          </div>
+          </Container>
         </main>
         <Footer />
       <ToastContainer />

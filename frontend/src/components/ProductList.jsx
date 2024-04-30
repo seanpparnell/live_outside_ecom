@@ -11,7 +11,7 @@ import {
 } from "../slices/filtersSlice";
 
 const ProductList = ({ categoryId }) => {
-  const [triggerRender, setTriggerRender] = useState(false);
+  // const [triggerRender, setTriggerRender] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -21,50 +21,21 @@ const ProductList = ({ categoryId }) => {
     error,
     refetch,
   } = useGetProductsInCategoryQuery(categoryId);
+
+  console.log('products:', products)
+
   
-  const availableColorsRedux = useSelector(selectAvailableColors);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const result = await refetch();
-        if (result.data && result.data.length > 0) {
-          const colors = result.data
-            .flatMap((product) =>
-              product.images.map((image) => ({
-                color: image.color,
-                path: image.path,
-              }))
-            )
-            .filter(
-              (color, index, self) =>
-                self.findIndex((c) => c.color === color.color) === index
-            );
-
-          dispatch(setAvailableColors(colors));
-        }
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
-    };
-
-    fetchProducts();
-  }, [categoryId, refetch, dispatch]);
-
-  useEffect(() => {
-    setTriggerRender((prev) => !prev);
-  }, [availableColorsRedux]);
+  
 
   const createVariantProduct = (product, image) => {
+    console.log('image.path:' , image.path)
     const variantProduct = { ...product };
     variantProduct.defaultColor = image.color;
-    variantProduct.images = [{
-      color: image.color,
-      path: image.path[0] // Selecting the first image path for the color
-    }];
-    return variantProduct;
+    variantProduct.defaultImages = image.path
+    console.log(' variant products:', variantProduct)
+    return variantProduct
   };
-
+  
 
   return (
     <Container>
@@ -73,7 +44,7 @@ const ProductList = ({ categoryId }) => {
       {!isLoading && !error && (
         <Row>
           {products.map((product) => {
-            if (product.images && product.images.length > 1) {
+            if (product.images && product.images.length > 0) {
               return product.images.map((image, index) => (
                 <Col
                   key={`${product._id}-${index}`}
@@ -87,7 +58,9 @@ const ProductList = ({ categoryId }) => {
                     product={createVariantProduct(product, image)}
                     index={index}
                     path={image.path}
-                    triggerRender={triggerRender}
+                    
+                    // triggerRender={triggerRender}
+                    
                   />
                 </Col>
               ));

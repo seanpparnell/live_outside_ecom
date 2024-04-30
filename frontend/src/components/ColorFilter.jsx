@@ -9,23 +9,21 @@ import {
   selectSelectedColor
 } from "../slices/filtersSlice";
 
-const ColorFilter = ({ selectedColor, onColorClick }) => {
+const ColorFilter = ({ selectedColor, onColorClick, availableColors, defaultColor }) => {
   
-  const availableColors = useSelector(selectAvailableColors);
+  // availableColors.map((x) => {
+  //   console.log(`color: ${x.color}, path: ${x.path}`)
+  // })
   
   const dispatch = useDispatch();
 
   return (
     <div style={{display: 'flex', justifyContent: 'center', marginTop: '4px'}}>
-      {availableColors.map((colorObj) => (
+      {availableColors.map((x) => (
         <div
-          
-          key={colorObj.color}
-          onClick={() => {
-            onColorClick(colorObj.color);
-            dispatch(setSelectedColor(colorObj.color));
-            dispatch(setSelectedColorImgPath(colorObj.path))
-          }}
+        
+        key={x.color}
+        onClick={() => onColorClick(x)}
         >
           
             <span
@@ -37,11 +35,11 @@ const ColorFilter = ({ selectedColor, onColorClick }) => {
                 width: "20px",
                 height: "20px",
                 borderRadius: "50%",
-                backgroundColor: colorObj.color,
+                backgroundColor: x.color,
                 margin: '0px 3px 0px 3px',
                 border: '.5px dotted black'
               }}
-            >
+              >
               <span style={{
                 display: "inline-block",
                 width: "28px",
@@ -50,10 +48,9 @@ const ColorFilter = ({ selectedColor, onColorClick }) => {
                 backgroundColor: 'transparent',
                 marginTop: '5px',
                 marginLeft: '-5px',
-                border: selectedColor === colorObj.color ? "2px solid blue" : "none",
+                border: selectedColor === x.color || (!selectedColor && defaultColor === x.color) ? "2px solid blue" : "none",
               }}></span>
             </span>
-         
         </div>
       ))}
     </div>
