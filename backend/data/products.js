@@ -53,7 +53,7 @@ const products = [
         path: [
           "/images/mens/shirts/northFace_tshirt_1/yellow_1.jpg",
           "/images/mens/shirts/northFace_tshirt_1/yellow_2.jpg",
-          "/images/mens/shirts/northFace_tshirt"
+          "/images/mens/shirts/northFace_tshirt_1/yellow_3.jpg"
         ],
       },
     ],
