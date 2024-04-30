@@ -53,20 +53,6 @@ const ProductScreen = () => {
   const selectedSize = useSelector(selectSelectedSize);
   const selectedQuantity = useSelector(selectSelectedQuantity);
 
-  // const [selectedColorLocal, setSelectedColorLocal] = useState("");
-  // const [selectedImgPathLocal, setSelectedImgPathLocal] = useState([]);
-
-  // useEffect(() => {
-  //   if (!highlightColor && product && product.defaultColor) {
-  //     // If no color is selected and there is a default color for the product, use the default color and image path
-  //     setSelectedColorLocal(product.defaultColor);
-  //     setSelectedImgPathLocal(product.defaultImages);
-  //   } else if (highlightColor && colorImgPath) {
-  //     // If a color is selected, update component's state with selected color and image path
-  //     setSelectedColorLocal(highlightColor);
-  //     setSelectedImgPathLocal(colorImgPath);
-  //   }
-  // }, [highlightColor, colorImgPath, product]);
 
   useEffect(() => {
     if (highlightColor === "none" && product && product.variations) {
@@ -118,11 +104,9 @@ const ProductScreen = () => {
 
   const sizes = getSizes(availableSizesForColor);
 
-  
   const handleColorChange = (color, selectedSize) => {
-    dispatch(setSelectedColor(color));
-    dispatch(setSelectedSize(selectedSize))
-    
+    dispatch(setSelectedColorImgPath(color.path));
+    dispatch(setSelectedColor(color.color));
   };
 
   const qty = useSelector(selectQtyForSizeColor);
@@ -162,6 +146,7 @@ const ProductScreen = () => {
             {product.variations && product.variations[0].color !== "none" && (
               <ColorFilter
                 availableColors={product.images}
+                selectedColor={highlightColor}
                 onColorClick={(color) =>
                   handleColorChange(color, selectedSize, availableSizesForColor)
                 }

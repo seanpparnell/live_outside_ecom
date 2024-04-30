@@ -11,7 +11,6 @@ import {
 } from "../slices/filtersSlice";
 
 const ProductList = ({ categoryId }) => {
-  // const [triggerRender, setTriggerRender] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -22,17 +21,10 @@ const ProductList = ({ categoryId }) => {
     refetch,
   } = useGetProductsInCategoryQuery(categoryId);
 
-  console.log('products:', products)
-
-  
-  
-
   const createVariantProduct = (product, image) => {
-    console.log('image.path:' , image.path)
     const variantProduct = { ...product };
     variantProduct.defaultColor = image.color;
     variantProduct.defaultImages = image.path
-    console.log(' variant products:', variantProduct)
     return variantProduct
   };
   
@@ -58,9 +50,6 @@ const ProductList = ({ categoryId }) => {
                     product={createVariantProduct(product, image)}
                     index={index}
                     path={image.path}
-                    
-                    // triggerRender={triggerRender}
-                    
                   />
                 </Col>
               ));
