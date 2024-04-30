@@ -60,6 +60,7 @@ const CartScreen = () => {
                   <ListGroup.Item key={item._id}>
                     <Row className="row">
                       <Col className="image-name">
+                    <Link to={`/products/${item._id}`} onClick={() => updateProductState(item)}>
                         <Image
                           style={{
                             height: "200px",
@@ -71,10 +72,7 @@ const CartScreen = () => {
                           fluid
                           rounded
                         />
-                        <Link
-                          to={`/products/${item._id}`}
-                          onClick={() => updateProductState(item)}
-                        >
+                        
                           {item.name}
                         </Link>
                       </Col>
