@@ -122,7 +122,7 @@ const ProductScreen = () => {
         size: selectedSize,
         color: highlightColor,
         quantity: selectedQuantity,
-        imgPath: colorImgPath,
+        image: colorImgPath[0],
         countInStock: qtyForSizeColor.qty,
       })
     );

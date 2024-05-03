@@ -12,7 +12,7 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      const { product, size, color, imgPath, quantity, countInStock } = action.payload;
+      const { product, size, color, image, quantity, countInStock } = action.payload;
       const compositeKey = `${product._id}-${color}-${size}`
       const existItemIndex = state.cartItems.findIndex((x) => x._id === product._id && x.size === size && x.color === color);
 
@@ -25,11 +25,11 @@ const cartSlice = createSlice({
           _id: product._id,
           name: product.name,
           description: product.description,
-          imgPath: imgPath,
+          image: image,
           color: color,
           size: size,
           qty: quantity,
-          itemPrice: product.price,
+          price: product.price,
           countInStock: countInStock,
           compositeKey
         });
