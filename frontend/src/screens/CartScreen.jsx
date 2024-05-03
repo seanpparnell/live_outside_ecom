@@ -43,7 +43,7 @@ const CartScreen = () => {
 
   const updateProductState = (item) => {
     dispatch(setSelectedColor(item.color))
-    dispatch(setSelectedColorImgPath(item.imgPath))
+    dispatch(setSelectedColorImgPath(item.image))
   };
 
   return (
@@ -60,25 +60,23 @@ const CartScreen = () => {
                   <ListGroup.Item key={item._id}>
                     <Row className="row">
                       <Col className="image-name">
+                    <Link to={`/products/${item._id}`} onClick={() => updateProductState(item)}>
                         <Image
                           style={{
                             height: "200px",
                             width: "200px",
                             objectFit: "contain",
                           }}
-                          src={item.imgPath[0]}
+                          src={item.image}
                           alt={item.name}
                           fluid
                           rounded
                         />
-                        <Link
-                          to={`/products/${item._id}`}
-                          onClick={() => updateProductState(item)}
-                        >
+                        
                           {item.name}
                         </Link>
                       </Col>
-                      <Col>${item.itemPrice}</Col>
+                      <Col>${item.price}</Col>
                       <Col>color: {item.color}</Col>
                       <Col>size: {item.size}</Col>
                       <Col>
@@ -125,7 +123,7 @@ const CartScreen = () => {
               <h6>
                 ${" "}
                 {cartItems
-                  .reduce((acc, item) => acc + item.qty * item.itemPrice, 0)
+                  .reduce((acc, item) => acc + item.qty * item.price, 0)
                   .toFixed(2)}
               </h6>
             </ListGroup.Item>

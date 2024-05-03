@@ -20,6 +20,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error('No order items');
   } else {
+    console.log('order items from order controller:', orderItems)
     const order = new Order({
       orderItems: orderItems.map((x) => ({
         ...x,
@@ -34,6 +35,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
       shippingPrice,
       totalPrice,
     });
+    console.log('order controller:',order)
 
     const createdOrder = await order.save();
 
@@ -59,7 +61,7 @@ const getOrderById = asyncHandler(async (req, res) => {
     res.status(200).json(order);
   } else {
     res.status(404);
-    throw new Error('ORder not found')
+    throw new Error('Order not found')
   }
 });
 
