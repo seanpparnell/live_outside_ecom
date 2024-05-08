@@ -1,33 +1,57 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux"; // Import 'useSelector'
+import { useDispatch, useSelector } from "react-redux";
 import Product from "./Product";
 import Loader from "./Loader";
 import Message from "./Message";
 import { useGetProductsInCategoryQuery } from "../slices/categoriesApiSlice";
-import {
-  setAvailableColors,
-  selectAvailableColors,
-} from "../slices/filtersSlice";
 
 const ProductList = ({ categoryId }) => {
-
   const dispatch = useDispatch();
 
-  const {
-    data: products,
-    isLoading,
-    error,
-    refetch,
-  } = useGetProductsInCategoryQuery(categoryId);
+  const { data: products, isLoading, error, refetch } = useGetProductsInCategoryQuery(categoryId);
 
-  const createVariantProduct = (product, image) => {
-    const variantProduct = { ...product };
-    variantProduct.defaultColor = image.color;
-    variantProduct.defaultImages = image.path
-    return variantProduct
+  const flattenProducts = (products) => {
+    return products ? products.reduce((acc, product) => {
+      if (product.images && product.images.length > 0) {
+        product.images.forEach((image, index) => {
+          const variantProduct = {
+            ...product,
+            _id: product._id, // Use the base product ID
+            variantId: index, // Add variant ID if needed
+            defaultColor: image.color,
+            defaultImages: image.path
+          };
+          acc.push(variantProduct);
+        });
+      } else {
+        acc.push(product);
+      }
+      return acc;
+    }, []) : [];
   };
   
+  const shuffleArray = (array) => {
+    const shuffledArray = [...array]; // Create a new array to avoid mutating the original array
+    // Fisher-Yates shuffle algorithm
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+    }
+    return shuffledArray;
+  };
+
+  const flattenedProducts = flattenProducts(products);
+
+  const shuffledProducts = flattenedProducts ? shuffleArray(flattenedProducts) : [];
+
+  useEffect(() => {
+    console.log("Products before shuffling:", products);
+  }, [products]);
+
+  useEffect(() => {
+    console.log("Products after shuffling:", shuffledProducts);
+  }, [shuffledProducts]);
 
   return (
     <Container>
@@ -35,32 +59,11 @@ const ProductList = ({ categoryId }) => {
       {error && <Message variant="danger">{error}</Message>}
       {!isLoading && !error && (
         <Row>
-          {products.map((product) => {
-            if (product.images && product.images.length > 0) {
-              return product.images.map((image, index) => (
-                <Col
-                  key={`${product._id}-${index}`}
-                  xs={12}
-                  sm={6}
-                  md={4}
-                  lg={3}
-                >
-                  <Product
-                    key={`${product._id}-${index}`}
-                    product={createVariantProduct(product, image)}
-                    index={index}
-                    path={image.path}
-                  />
-                </Col>
-              ));
-            } else {
-              return (
-                <Col key={product._id} xs={12} sm={6} md={4} lg={3}>
-                  <Product key={product._id} product={product} />
-                </Col>
-              );
-            }
-          })}
+          {shuffledProducts.map((product) => (
+            <Col key={product._id} xs={12} sm={6} md={4} lg={3}>
+              <Product product={product} />
+            </Col>
+          ))}
         </Row>
       )}
     </Container>
