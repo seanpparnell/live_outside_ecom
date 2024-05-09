@@ -7,7 +7,6 @@ import Message from "./Message";
 import { useGetProductsInCategoryQuery } from "../slices/categoriesApiSlice";
 
 const ProductList = ({ categoryId }) => {
-  const dispatch = useDispatch();
 
   const { data: products, isLoading, error, refetch } = useGetProductsInCategoryQuery(categoryId);
 
@@ -17,8 +16,7 @@ const ProductList = ({ categoryId }) => {
         product.images.forEach((image, index) => {
           const variantProduct = {
             ...product,
-            _id: product._id, // Use the base product ID
-            variantId: index, // Add variant ID if needed
+            _id: `${product._id}-${index}`, // Unique identifier for each variant product
             defaultColor: image.color,
             defaultImages: image.path
           };
@@ -45,13 +43,6 @@ const ProductList = ({ categoryId }) => {
 
   const shuffledProducts = flattenedProducts ? shuffleArray(flattenedProducts) : [];
 
-  useEffect(() => {
-    console.log("Products before shuffling:", products);
-  }, [products]);
-
-  useEffect(() => {
-    console.log("Products after shuffling:", shuffledProducts);
-  }, [shuffledProducts]);
 
   return (
     <Container>
