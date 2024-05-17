@@ -2,13 +2,16 @@ import asyncHandler from "../middleware/asyncHandler.js";
 import Category from "../models/categoryModel.js";
 import Product from "../models/productModel.js";
 
-const getAllProductsByCategory = async (category) => {
+const getAllProductsByCategoryOrSubCategory = async (categoryId) => {
   try {
-    const productsInCategory = await Product.find({
-      category: category._id,
+    const productsInCategoryOrSubCategory = await Product.find({
+      $or: [
+        { category: categoryId },
+        { subCategory: categoryId }
+      ],
     }).populate("variations");
 
-    return productsInCategory.map((product) => {
+    return productsInCategoryOrSubCategory.map((product) => {
       const { variations, ...rest } = product.toObject();
       return {
         ...rest,
@@ -19,8 +22,8 @@ const getAllProductsByCategory = async (category) => {
       };
     });
   } catch (error) {
-    console.error("Error in getAllProductsByCategory:", error);
-    throw new Error("Error fetching products in the category");
+    console.error("Error in getAllProductsByCategoryOrSubCategory:", error);
+    throw new Error("Error fetching products in the category or subcategory");
   }
 };
 
@@ -63,10 +66,10 @@ const getCategoryById = asyncHandler(async (req, res) => {
   }
 });
 
-
 const getProductsInCategory = asyncHandler(async (req, res) => {
   try {
     const categoryId = req.params.id;
+
     const category = await Category.findById(categoryId);
 
     if (!category) {
@@ -74,7 +77,8 @@ const getProductsInCategory = asyncHandler(async (req, res) => {
       return;
     }
 
-    const allProducts = await getAllProductsByCategory(category);
+    let allProducts = await getAllProductsByCategoryOrSubCategory(category._id);
+
     res.json(allProducts);
   } catch (error) {
     console.error("Error in getProductsInCategory:", error);
