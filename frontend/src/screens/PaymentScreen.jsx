@@ -7,7 +7,7 @@ import CheckoutSteps from '../components/CheckoutSteps';
 import { savePaymentMethod } from '../slices/cartSlice'
 
 
-const PaymentScreen = ({ step1, step2, step3 }) => {
+const PaymentScreen = () => {
   const [paymentMethod, setPaymentMethod] = useState('Paypal');
 
   const dispatch = useDispatch();

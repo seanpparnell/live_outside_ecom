@@ -45,10 +45,10 @@ const NavBar = () => {
         collapseOnSelect
         style={{ borderBottom: "1px solid grey" }}
       >
-        <Container fluid style={{margin: '0px 30px 0px 30px'}}>
+        <Container fluid style={{margin: '0px 40px 0px 40px'}}>
           <LinkContainer to="/">
             <Navbar.Brand>
-              <img style={{ height: 25 }} src={LogoText} alt="logo" />
+              <img style={{ height: 45 }} src={LogoText} alt="logo" />
             </Navbar.Brand>
           </LinkContainer>
 
@@ -87,6 +87,19 @@ const NavBar = () => {
               <Nav.Link href="/login">
                 <FaUser />
               </Nav.Link>
+            )}
+            {userInfo && userInfo.isAdmin && (
+              <NavDropdown title='Admin' id='adminmenu'>
+                <LinkContainer to='/admin/productlist'>
+                  <NavDropdown.Item>Products</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to='/admin/userlist'>
+                  <NavDropdown.Item>Users</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to='/admin/orderlist'>
+                  <NavDropdown.Item>Orders</NavDropdown.Item>
+                </LinkContainer>
+              </NavDropdown>
             )}
           </Nav>
         </Container>

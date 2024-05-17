@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const filtersSlice = createSlice({
   name: "filters",
   initialState: {
-    availableColors: [],
+    availableColors: {},
     selectedColor: "",
     selectedColorImgPath: [],
     availableSizesQtyForColor: [], 

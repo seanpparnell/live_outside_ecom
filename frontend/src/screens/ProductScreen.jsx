@@ -46,6 +46,8 @@ const ProductScreen = () => {
     error,
   } = useGetProductDetailsQuery(productId);
 
+  console.log('product:', product)
+
 
   const highlightColor = useSelector(selectSelectedColor);
   const availableSizesForColor = useSelector(selectAvailableSizesQtyForColor);
@@ -53,20 +55,24 @@ const ProductScreen = () => {
   const selectedSize = useSelector(selectSelectedSize);
   const selectedQuantity = useSelector(selectSelectedQuantity);
 
+
   useEffect(() => {
-    if (highlightColor === "none" && product && product.variations) {
-      // Find the variation with color 'none' and size 'one size fits all'
-      const noneColorVariation = product.variations.find(
+    if (product && product.variations) {
+      // Find the variation with size 'One Size Fits All' for any color
+      const oneSizeFitsAllVariation = product.variations.find(
         (variation) =>
-          variation.color === "none" &&
           variation.sizes.some((size) => size.size === "One Size Fits All")
       );
-
-      if (noneColorVariation) {
-        const countInStock = noneColorVariation.sizes.find(
+  
+      // If found, dispatch the size to selectedSize
+      if (oneSizeFitsAllVariation) {
+        dispatch(setSelectedSize("One Size Fits All"));
+  
+        // Dispatch quantity for the 'One Size Fits All' variation
+        const countInStock = oneSizeFitsAllVariation.sizes.find(
           (size) => size.size === "One Size Fits All"
         ).countInStock;
-
+  
         dispatch(
           setQtyForSizeColor({
             color: "none",
@@ -74,21 +80,39 @@ const ProductScreen = () => {
             qty: countInStock,
           })
         );
-      }
-    } else if (highlightColor && product && product.variations) {
-      const selectedVariation = product.variations.find(
-        (variation) => variation.color === highlightColor
-      );
-      if (selectedVariation) {
-        dispatch(
-          setAvailableSizesQtyForColor({
-            color: highlightColor,
-            sizes: selectedVariation.sizes,
-          })
-        );
+      } else {
+        // If no 'One Size Fits All' variation found, handle colors
+        if (highlightColor === "none") {
+          // If there are no colors specified, don't show color filter
+          // and use the first color variation to populate sizes
+          const defaultColorVariation = product.variations[0];
+  
+          if (defaultColorVariation) {
+            dispatch(
+              setAvailableSizesQtyForColor({
+                color: defaultColorVariation.color,
+                sizes: defaultColorVariation.sizes,
+              })
+            );
+          }
+        } else {
+          // Find the variation for the selected color
+          const selectedVariation = product.variations.find(
+            (variation) => variation.color === highlightColor
+          );
+          if (selectedVariation) {
+            dispatch(
+              setAvailableSizesQtyForColor({
+                color: highlightColor,
+                sizes: selectedVariation.sizes,
+              })
+            );
+          }
+        }
       }
     }
   }, [highlightColor, product, dispatch]);
+  
 
 
   const getSizes = (object) => {
@@ -103,11 +127,9 @@ const ProductScreen = () => {
 
   const sizes = getSizes(availableSizesForColor);
 
-  
   const handleColorChange = (color, selectedSize) => {
-    dispatch(setSelectedColor(color));
-    dispatch(setSelectedSize(selectedSize))
-    
+    dispatch(setSelectedColorImgPath(color.path));
+    dispatch(setSelectedColor(color.color));
   };
 
   const qty = useSelector(selectQtyForSizeColor);
@@ -123,7 +145,7 @@ const ProductScreen = () => {
         size: selectedSize,
         color: highlightColor,
         quantity: selectedQuantity,
-        imgPath: colorImgPath[0],
+        image: colorImgPath[0],
         countInStock: qtyForSizeColor.qty,
       })
     );
@@ -146,6 +168,7 @@ const ProductScreen = () => {
           <ProductCarousel images={colorImgPath} />
             {product.variations && product.variations[0].color !== "none" && (
               <ColorFilter
+                availableColors={product.images}
                 selectedColor={highlightColor}
                 onColorClick={(color) =>
                   handleColorChange(color, selectedSize, availableSizesForColor)
