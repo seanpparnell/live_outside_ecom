@@ -16,7 +16,7 @@ const ProductList = ({ categoryId }) => {
         product.images.forEach((image, index) => {
           const variantProduct = {
             ...product,
-            _id: `${product._id}-${index}`, // Unique identifier for each variant product
+            _id: `${product._id}`,
             defaultColor: image.color,
             defaultImages: image.path
           };
