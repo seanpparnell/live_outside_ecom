@@ -22,7 +22,6 @@ const getAllProductsByCategoryOrSubCategory = async (categoryId) => {
       };
     });
   } catch (error) {
-    console.error("Error in getAllProductsByCategoryOrSubCategory:", error);
     throw new Error("Error fetching products in the category or subcategory");
   }
 };
@@ -44,7 +43,6 @@ const getCategories = asyncHandler(async (req, res) => {
 
     res.json(categoriesWithSubCategories);
   } catch (error) {
-    console.error("Error in getCategories:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 });

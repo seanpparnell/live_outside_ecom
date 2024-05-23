@@ -19,7 +19,7 @@ const CategoryScreen = () => {
     <>
       <SubCategoryBar />
       <Container style={{display: 'flex'}}>
-        <SideBarFilter />
+        {/* <SideBarFilter /> */}
         <ProductList categoryId={selectedCategory}/>
       </Container>
     </>

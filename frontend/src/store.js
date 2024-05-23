@@ -7,6 +7,7 @@ import categorySliceReducer from "./slices/categorySlice";
 import authSliceReducer from "./slices/authSlice";
 import cartSliceReducer from "./slices/cartSlice";
 import filtersSliceReducer from "./slices/filtersSlice";
+import productsSliceReducer from "./slices/productsSlice"
 
 // const authPersistConfig = {
 //   key: "auth",
@@ -30,6 +31,7 @@ const persistedReducer = persistReducer(
     auth: authSliceReducer,
     category: categorySliceReducer,
     filters: filtersSliceReducer,
+    products: productsSliceReducer,
   })
 );
 

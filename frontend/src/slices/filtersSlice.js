@@ -26,10 +26,8 @@ const filtersSlice = createSlice({
         (sizeObj) => sizeObj.size === selectedSize
       );
       if (!sizeAvailableForNewColor) {
-        state.selectedSize = ""; // Reset selected size when it's not available for the new color
+        state.selectedSize = "";
       }
-
-      // Update qtyForSizeColor with the selected color and quantity for the selected size (if available)
       const qty =
         availableSizesQtyForColor[selectedColor]?.find(
           (item) => item.size === selectedSize
