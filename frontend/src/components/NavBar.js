@@ -1,26 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Navbar,
-  Nav,
-  Container,
-  Image,
-  Badge,
-  NavDropdown,
-} from "react-bootstrap";
+import { Navbar, Nav, Container, Image, Badge, NavDropdown, Button } from "react-bootstrap";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import { RiShoppingCartLine } from "react-icons/ri";
 import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../slices/usersApiSlice";
-import { logout } from "../slices/authSlice";
+import { logout, toggleAdminView } from "../slices/authSlice";
 import { LinkContainer } from "react-router-bootstrap";
 import LogoText from "../assets/main/logoText.png";
 import CategoryBar from "./CategoryBar";
+import SubCategoryBar from "./SubCategoryBar";
 
 const NavBar = () => {
   const { cartItems } = useSelector((state) => state.cart);
-  const { userInfo } = useSelector((state) => state.auth);
+  const { userInfo, adminView } = useSelector((state) => state.auth);
+  const selectedCategory = useSelector((state) => state.category.categoryId);
   const uniqueItemsCount = cartItems.length;
+  console.log(selectedCategory)
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -37,6 +33,13 @@ const NavBar = () => {
     }
   };
 
+  const toggleAdminViewHandler = () => {
+    dispatch(toggleAdminView());
+    const categoryRoute = selectedCategory ? `/categories/${selectedCategory}` : "/";
+    const adminCategoryRoute = selectedCategory ? `/admin/categories/${selectedCategory}` : "/";
+    navigate(adminView ? categoryRoute : adminCategoryRoute);
+  };
+
   return (
     <header style={{ borderBottom: "1px solid grey"}}>
       <Navbar
@@ -46,6 +49,9 @@ const NavBar = () => {
         style={{ borderBottom: "1px solid grey" }}
       >
         <Container fluid style={{margin: '0px 40px 0px 40px'}}>
+          {userInfo && userInfo.isAdmin && (
+            <Button onClick={toggleAdminViewHandler}>{adminView ? "User View" : "Admin View"}</Button>
+          )}
           <LinkContainer to="/">
             <Navbar.Brand>
               <img style={{ height: 45 }} src={LogoText} alt="logo" />
@@ -90,9 +96,6 @@ const NavBar = () => {
             )}
             {userInfo && userInfo.isAdmin && (
               <NavDropdown title='Admin' id='adminmenu'>
-                <LinkContainer to='/admin/productlist'>
-                  <NavDropdown.Item>Products</NavDropdown.Item>
-                </LinkContainer>
                 <LinkContainer to='/admin/userlist'>
                   <NavDropdown.Item>Users</NavDropdown.Item>
                 </LinkContainer>

@@ -11,10 +11,6 @@ import {
 
 const ColorFilter = ({ selectedColor, onColorClick, availableColors, defaultColor }) => {
   
-  // availableColors.map((x) => {
-  //   console.log(`color: ${x.color}, path: ${x.path}`)
-  // })
-  
   const dispatch = useDispatch();
 
   return (

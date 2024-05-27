@@ -1,31 +1,24 @@
-// Product.js
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useAsyncError } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { Card } from "react-bootstrap";
 import Rating from "./Rating";
 import ColorFilter from "./ColorFilter";
 import {
   setSelectedColor,
   setSelectedColorImgPath,
-  selectAvailableColors,
-  setSelectedSize,
 } from "../slices/filtersSlice";
-import { FaAvianex } from "react-icons/fa";
-import { get } from "mongoose";
 
-const Product = ({ product, index}) => {
+const Product = ({ product }) => {
   const [selectedColorLocal, setSelectedColorLocal] = useState("");
   const [selectedImgPathLocal, setSelectedImgPathLocal] = useState([]);
-
   
   const dispatch = useDispatch();
   
-  const { _id, name, rating, numReviews, price, variations, images } = product;
+  const { originalId, name, rating, numReviews, price, variations, images } = product;
 
   useEffect(() => {
     if (!selectedColorLocal && product.defaultColor) {
-      // setSelectedColorLocal(product.defaultColor);
       setSelectedImgPathLocal(product.defaultImages);
     }
   }, [selectedColorLocal, product.defaultColor]);
@@ -48,7 +41,7 @@ const Product = ({ product, index}) => {
 
   return (
     <Card className="my-3 p-3 rounded product" style={{ maxWidth: '215px', maxHeight: '400px', minHeight: '400px'}}>
-      <Link to={`/products/${_id}`} onClick={() => handleProductClick(product)} style={{display: 'flex', justifyContent: 'center', alignContent: 'center', alignItems: 'center',}}>
+      <Link to={`/products/${originalId}`} onClick={() => handleProductClick(product)} style={{display: 'flex', justifyContent: 'center', alignContent: 'center', alignItems: 'center',}}>
         <div style={{height: '200px', width: '100px', display: 'flex', justifyContent: 'center', alignContent: 'center', alignItems: 'center'}}>
           <Card.Img
             style={{ width: '100%', height: 'auto'}}
@@ -67,7 +60,7 @@ const Product = ({ product, index}) => {
         />
       )}
       <Card.Body>
-        <Link to={`/products/${_id}`}>
+        <Link to={`/products/${originalId}`}>
           <Card.Title className="product-title" as="div">
             <strong>{name}</strong>
           </Card.Title>

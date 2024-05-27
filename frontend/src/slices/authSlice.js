@@ -4,6 +4,7 @@ const initialState = {
   userInfo: localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo"))
     : null,
+    adminView: false, 
 };
 
 const authSlice = createSlice({
@@ -18,10 +19,13 @@ const authSlice = createSlice({
       state.userInfo = null;
       localStorage.removeItem("userInfo");
     },
+    toggleAdminView: (state) => {
+      state.adminView = !state.adminView;
+    },
   },
 });
 
-export const { setCredentials, logout } =
+export const { setCredentials, logout, toggleAdminView } =
   authSlice.actions;
 
 export default authSlice.reducer;

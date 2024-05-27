@@ -120,7 +120,6 @@ const getUsers = asyncHandler(async (req, res) => {
     const users = await User.find({}).lean(); // Using lean() to get plain JavaScript objects instead of Mongoose documents
     res.json(users);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: 'Server Error' });
   }
 });

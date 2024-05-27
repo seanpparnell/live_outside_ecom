@@ -1,37 +1,48 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Product from "./Product";
 import Loader from "./Loader";
 import Message from "./Message";
 import { useGetProductsInCategoryQuery } from "../slices/categoriesApiSlice";
+import { setProducts, clearProducts } from "../slices/productsSlice";
 
 const ProductList = ({ categoryId }) => {
+  const dispatch = useDispatch();
+  const { data: products, isLoading, error } = useGetProductsInCategoryQuery(categoryId);
 
-  const { data: products, isLoading, error, refetch } = useGetProductsInCategoryQuery(categoryId);
-
-  const flattenProducts = (products) => {
-    return products ? products.reduce((acc, product) => {
-      if (product.images && product.images.length > 0) {
-        product.images.forEach((image, index) => {
-          const variantProduct = {
-            ...product,
-            _id: `${product._id}`,
-            defaultColor: image.color,
-            defaultImages: image.path
-          };
-          acc.push(variantProduct);
-        });
-      } else {
-        acc.push(product);
+  useEffect(() => {
+    if (categoryId) {
+      dispatch(clearProducts());
+      if (products) {
+        const variantProducts = products.reduce((acc, product) => {
+          if (product.images && product.images.length > 0) {
+            product.images.forEach((image, index) => {
+              const variantProduct = {
+                ...product,
+                originalId: product._id, // Store the original product ID
+                _id: `${product._id}-${index}`, // Modified ID
+                defaultColor: image.color,
+                defaultImages: image.path,
+              };
+              acc.push(variantProduct);
+            });
+          } else {
+            const variantProduct = {
+              ...product,
+              originalId: product._id, // Store the original product ID
+            };
+            acc.push(variantProduct);
+          }
+          return acc;
+        }, []);
+        dispatch(setProducts(variantProducts));
       }
-      return acc;
-    }, []) : [];
-  };
-  
+    }
+  }, [categoryId, dispatch, products]);
+
   const shuffleArray = (array) => {
-    const shuffledArray = [...array]; // Create a new array to avoid mutating the original array
-    // Fisher-Yates shuffle algorithm
+    const shuffledArray = [...array];
     for (let i = shuffledArray.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
@@ -39,15 +50,13 @@ const ProductList = ({ categoryId }) => {
     return shuffledArray;
   };
 
-  const flattenedProducts = flattenProducts(products);
-
-  const shuffledProducts = flattenedProducts ? shuffleArray(flattenedProducts) : [];
-
+  const productItems = useSelector((state) => state.products.products);
+  const shuffledProducts = shuffleArray(productItems);
 
   return (
     <Container>
       {isLoading && <Loader />}
-      {error && <Message variant="danger">{error}</Message>}
+      {error && <Message variant="danger">{error.message}</Message>}
       {!isLoading && !error && (
         <Row>
           {shuffledProducts.map((product) => (

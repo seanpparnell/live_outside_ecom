@@ -45,10 +45,7 @@ const ProductScreen = () => {
     isLoading,
     error,
   } = useGetProductDetailsQuery(productId);
-
-  console.log('product:', product)
-
-
+  
   const highlightColor = useSelector(selectSelectedColor);
   const availableSizesForColor = useSelector(selectAvailableSizesQtyForColor);
   const colorImgPath = useSelector(selectSelectedColorImgPath);

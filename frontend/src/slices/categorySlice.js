@@ -4,6 +4,7 @@ const initialState = {
   categoryId: localStorage.getItem("categoryId")
     ? JSON.parse(localStorage.getItem("categoryId"))
     : null,
+  subCategories: []
 };
 
 const categorySlice = createSlice({
@@ -15,9 +16,12 @@ const categorySlice = createSlice({
       state.categoryId = newId;
       localStorage.setItem("categoryId", JSON.stringify(newId));
     },
+    addSubCategories: (state, action) => {
+      state.subCategories = action.payload;
+    }
   },
 });
 
-export const { addCategoryId } = categorySlice.actions;
+export const { addCategoryId, addSubCategories } = categorySlice.actions;
 
 export default categorySlice.reducer;
