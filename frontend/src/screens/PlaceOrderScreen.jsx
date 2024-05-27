@@ -16,7 +16,6 @@ const PlaceOrderScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cart)
-  console.log(cart)
 
   const [createOrder, {isLoading, error}] = useCreateOrderMutation();
 
@@ -47,38 +46,6 @@ const PlaceOrderScreen = () => {
       toast.error(error.data.message)
     }
   }
-
-//   const placeOrderHandler = async () => {
-//     try {
-//         // Transform cartItems to match orderItems schema
-//         const transformedCartItems = cart.cartItems.map(item => ({
-//             name: item.name,
-//             qty: item.qty,
-//             image: item.image, // Assuming imgPath is an array of image paths
-//             price: item.price, // Assuming itemPrice is the price of the item
-//             product: item.compositeKey,
-//         }));
-
-//         console.log('Order Items:', transformedCartItems);
-
-//         const res = await createOrder({
-//             orderItems: transformedCartItems,
-//             shippingAddress: cart.shippingAddress,
-//             paymentMethod: cart.paymentMethod,
-//             itemsPrice: cart.itemsPrice,
-//             shippingPrice: cart.shippingPrice,
-//             taxPrice: cart.taxPrice,
-//             totalPrice: cart.totalPrice,
-//         }).unwrap();
-        
-//         dispatch(clearCartItems());
-//         navigate(`/order/${res._id}`)
-//     } catch (error) {
-//         toast.error(error.data.message)
-//     }
-// }
-
-  
 
   return (
     <>

@@ -4,17 +4,25 @@ import Product from "../models/productModel.js";
 
 const getAllProductsByCategoryOrSubCategory = async (categoryId) => {
   try {
+    // Fetch the products by category or subcategory
     const productsInCategoryOrSubCategory = await Product.find({
-      $or: [
-        { category: categoryId },
-        { subCategory: categoryId }
-      ],
+      $or: [{ category: categoryId }, { subCategory: categoryId }],
     }).populate("variations");
 
+    // Fetch the category and subcategory details
+    const categories = await Category.find({
+      _id: { $in: productsInCategoryOrSubCategory.map(product => product.category).concat(productsInCategoryOrSubCategory.map(product => product.subCategory)) },
+    });
+
+    // Map products with category and subcategory names
     return productsInCategoryOrSubCategory.map((product) => {
-      const { variations, ...rest } = product.toObject();
+      const { variations, category, subCategory, ...rest } = product.toObject();
+      const categoryName = categories.find(cat => cat._id.toString() === category.toString())?.name || null;
+      const subCategoryName = categories.find(cat => cat._id.toString() === subCategory?.toString())?.name || null;
       return {
         ...rest,
+        category: categoryName,
+        subCategory: subCategoryName,
         variations: variations.map((variation) => ({
           name: variation.color,
           value: variation.sizes,

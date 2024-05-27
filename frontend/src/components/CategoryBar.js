@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
-import { useGetCategoriesQuery } from "../slices/categoriesApiSlice";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addCategoryId, addSubCategories } from "../slices/categorySlice";
+import React from 'react';
+import { Container } from 'react-bootstrap';
+import { useGetCategoriesQuery } from '../slices/categoriesApiSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCategoryId, addSubCategories } from '../slices/categorySlice';
+import { Link } from 'react-router-dom';
 
 const CategoryBar = () => {
   const { data: categories, isLoading, error } = useGetCategoriesQuery();
   const dispatch = useDispatch();
+  const { userInfo, adminView } = useSelector((state) => state.auth);
 
   const handleCategoryClick = (category) => {
     dispatch(addCategoryId(category.parentCategory._id));
@@ -28,18 +29,22 @@ const CategoryBar = () => {
     <Container>
       <div
         style={{
-          width: "100%",
-          display: "flex",
-          alignContent: "center",
-          justifyContent: "space-around",
-          alignItems: "center",
-          margin: "10px 0 10px 0",
+          width: '100%',
+          display: 'flex',
+          alignContent: 'center',
+          justifyContent: 'space-around',
+          alignItems: 'center',
+          margin: '10px 0 10px 0',
         }}
       >
         {sortedCategories.map((category) => (
           <Link
             key={category._id}
-            to={`/categories/${category.parentCategory.name}`}
+            to={
+              userInfo && userInfo.isAdmin && adminView
+                ? `/admin/categories/${category.parentCategory.name}`
+                : `/categories/${category.parentCategory.name}`
+            }
             onClick={() => handleCategoryClick(category)}
           >
             {category.parentCategory.name}

@@ -13,21 +13,26 @@ const ProductList = ({ categoryId }) => {
 
   useEffect(() => {
     if (categoryId) {
-      dispatch(clearProducts()); // Clear products when category changes
+      dispatch(clearProducts());
       if (products) {
         const variantProducts = products.reduce((acc, product) => {
           if (product.images && product.images.length > 0) {
             product.images.forEach((image, index) => {
               const variantProduct = {
                 ...product,
-                _id: `${product._id}-${index}`, // Ensure unique ID for variants
+                originalId: product._id, // Store the original product ID
+                _id: `${product._id}-${index}`, // Modified ID
                 defaultColor: image.color,
                 defaultImages: image.path,
               };
               acc.push(variantProduct);
             });
           } else {
-            acc.push(product);
+            const variantProduct = {
+              ...product,
+              originalId: product._id, // Store the original product ID
+            };
+            acc.push(variantProduct);
           }
           return acc;
         }, []);
@@ -37,7 +42,7 @@ const ProductList = ({ categoryId }) => {
   }, [categoryId, dispatch, products]);
 
   const shuffleArray = (array) => {
-    const shuffledArray = [...array]; 
+    const shuffledArray = [...array];
     for (let i = shuffledArray.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
